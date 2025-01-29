@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_travel">
+
+    <fragment
+        android:id="@+id/navigation_travel"
+        android:name="com.example.travelmate.presentation.feature.travel.TravelFragment"
+        android:label="@string/title_travel"
+        tools:layout="@layout/fragment_travel" />
+
+    <fragment
+        android:id="@+id/navigation_itinerary"
+        android:name="com.example.travelmate.presentation.feature.itinerary.ItineraryFragment"
+        android:label="@string/title_itinerary"
+        tools:layout="@layout/fragment_itinerary" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.travelmate.presentation.feature.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

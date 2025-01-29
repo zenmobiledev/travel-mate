@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_travel"
+        android:icon="@drawable/travel_selector"
+        android:title="@string/title_travel" />
+
+    <item
+        android:id="@+id/navigation_itinerary"
+        android:icon="@drawable/itinerary_selector"
+        android:title="@string/title_itinerary" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile_selector"
+        android:title="@string/title_profile" />
+
+</menu>
