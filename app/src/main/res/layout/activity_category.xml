@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/travel"
+    tools:context=".presentation.feature.category.CategoryActivity">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FEFEFE">
+
+            <TextView
+                android:id="@+id/textView_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="What do you want to visit?"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick your\ndestination"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/textView_1"
+                app:layout_constraintTop_toBottomOf="@+id/textView_1" />
+
+            <ImageView
+                android:id="@+id/imageView_travel_plans"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/travel_plans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView_1" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox_beach"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beach"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView_2"
+                app:layout_constraintTop_toBottomOf="@id/imageView_travel_plans" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox_mountain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mountain"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView_2"
+                app:layout_constraintTop_toBottomOf="@id/checkBox_beach" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox_cultural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cultural"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView_2"
+                app:layout_constraintTop_toBottomOf="@id/checkBox_mountain" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBox_culinary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Culinary"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/textView_2"
+                app:layout_constraintTop_toBottomOf="@id/checkBox_cultural" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_start_journey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:text="Start journey"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/checkBox_culinary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
