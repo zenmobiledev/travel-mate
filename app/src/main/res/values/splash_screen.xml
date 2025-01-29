@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.TravelMate.Starting" parent="Theme.SplashScreen">
+        <!-- Set the background image. -->
+        <item name="android:windowBackground">@drawable/travel</item>
+        <!-- Required for animated icons. -->
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <!-- Set the theme of the Activity that directly follows your splash screen. This is required. -->
+        <item name="postSplashScreenTheme">@style/Theme.TravelMate</item>
+    </style>
+</resources>

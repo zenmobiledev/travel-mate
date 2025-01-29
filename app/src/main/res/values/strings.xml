@@ -3,4 +3,9 @@
     <string name="title_travel">Travel</string>
     <string name="title_itinerary">Itinerary</string>
     <string name="title_profile">Profile</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_remember_me">Remember me</string>
+    <string name="text_login">Login</string>
+    <string name="text_enter_your_email_and_password_to_log_in">Enter your email and password to log in</string>
 </resources>

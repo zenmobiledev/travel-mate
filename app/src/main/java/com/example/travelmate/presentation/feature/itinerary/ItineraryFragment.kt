@@ -23,7 +23,7 @@ class ItineraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(ItineraryViewModel::class.java)
+            ViewModelProvider(this)[ItineraryViewModel::class.java]
 
         _binding = FragmentItineraryBinding.inflate(inflater, container, false)
         val root: View = binding.root

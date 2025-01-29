@@ -23,7 +23,7 @@ class TravelFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         val homeViewModel =
-            ViewModelProvider(this).get(TravelViewModel::class.java)
+            ViewModelProvider(this)[TravelViewModel::class.java]
 
         _binding = FragmentTravelBinding.inflate(inflater, container, false)
         val root: View = binding.root
