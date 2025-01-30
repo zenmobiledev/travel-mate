@@ -3,7 +3,9 @@ package com.example.travelmate.presentation.feature.travel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelmate.domain.model.destination.DestinationUser
+import com.example.travelmate.domain.model.destination.Itinerary
 import com.example.travelmate.domain.usecase.destination.DestinationUseCase
+import com.example.travelmate.domain.usecase.itinerary.ItineraryUseCase
 import com.example.travelmate.utils.ResultResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TravelViewModel @Inject constructor(
     private val destinationUseCase: DestinationUseCase,
+    private val itineraryUseCase: ItineraryUseCase,
 ) : ViewModel() {
     private val _getAllDestination: MutableStateFlow<List<DestinationUser.Destination>?> =
         MutableStateFlow(emptyList())
@@ -34,10 +37,15 @@ class TravelViewModel @Inject constructor(
         return destinationUseCase.getToken()
     }
 
-    fun getAllDestination(page: Int, token: String) {
+    suspend fun saveItinerary(itinerary: Itinerary) {
+        return itineraryUseCase.saveItinerary(itinerary)
+    }
+
+    fun getAllDestination(page: Int = 1, limit: Int = 10, token: String) {
         viewModelScope.launch {
             destinationUseCase(
                 page = page,
+                limit = limit,
                 token = token
             ).collect { result ->
                 when (result) {

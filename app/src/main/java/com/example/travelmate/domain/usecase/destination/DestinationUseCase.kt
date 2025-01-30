@@ -9,10 +9,12 @@ import javax.inject.Inject
 class DestinationUseCase @Inject constructor(private val travelRepository: TravelRepository) {
     suspend operator fun invoke(
         page: Int,
+        limit: Int,
         token: String,
     ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
         return travelRepository.getAllDestination(
             page = page,
+            limit = limit,
             token = token
         )
     }

@@ -24,11 +24,13 @@ class TravelRemoteDataSourceImpl @Inject constructor(private val travelService: 
 
     override suspend fun getAllDestination(
         page: Int,
+        limit: Int,
         token: String,
     ): Response<DestinationResponse> {
         try {
             val response = travelService.getDestinations(
                 page = page,
+                limit = limit,
                 token = token
             )
             return when {

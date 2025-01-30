@@ -2,9 +2,10 @@ package com.example.travelmate.di
 
 import com.example.travelmate.data.mapper.Mapper
 import com.example.travelmate.data.repository.TravelRepositoryImpl
-import com.example.travelmate.data.source.local.datastore.TravelLocalDataSource
-import com.example.travelmate.data.source.local.datastore.TravelLocalDataSourceImpl
-import com.example.travelmate.data.source.local.pref.PreferenceDataStore
+import com.example.travelmate.data.source.local.dao.TravelDao
+import com.example.travelmate.data.source.local.datasource.TravelLocalDataSource
+import com.example.travelmate.data.source.local.datasource.TravelLocalDataSourceImpl
+import com.example.travelmate.data.source.local.preference.PreferenceDataStore
 import com.example.travelmate.data.source.remote.api.TravelService
 import com.example.travelmate.data.source.remote.datasource.TravelRemoteDataSource
 import com.example.travelmate.data.source.remote.datasource.TravelRemoteDataSourceImpl
@@ -40,7 +41,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideTravelLocalDataSource(travelLocal: PreferenceDataStore): TravelLocalDataSource {
-        return TravelLocalDataSourceImpl(travelLocal)
+    fun provideTravelLocalDataSource(
+        travelLocal: PreferenceDataStore,
+        travelDao: TravelDao,
+    ): TravelLocalDataSource {
+        return TravelLocalDataSourceImpl(travelLocal, travelDao)
     }
 }

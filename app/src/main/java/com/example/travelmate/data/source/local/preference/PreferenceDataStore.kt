@@ -1,4 +1,4 @@
-package com.example.travelmate.data.source.local.pref
+package com.example.travelmate.data.source.local.preference
 
 import android.content.Context
 import androidx.datastore.core.DataStore

@@ -20,6 +20,7 @@ interface TravelService {
     @GET("travel/destinations")
     suspend fun getDestinations(
         @Query("page") page: Int,
+        @Query("limit") limit: Int,
         @Header("x-secret-app") secretApp: String = BuildConfig.SECRET_APP,
         @Header("x-user-id") userId: String = BuildConfig.USER_ID,
         @Header("x-token") token: String,

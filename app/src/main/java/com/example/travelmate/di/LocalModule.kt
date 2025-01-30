@@ -4,8 +4,11 @@ package com.example.travelmate.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.example.travelmate.data.source.local.pref.PreferenceDataStore
-import com.example.travelmate.data.source.local.pref.dataStore
+import androidx.room.Room
+import com.example.travelmate.data.source.local.dao.TravelDao
+import com.example.travelmate.data.source.local.database.AppDatabase
+import com.example.travelmate.data.source.local.preference.PreferenceDataStore
+import com.example.travelmate.data.source.local.preference.dataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +29,20 @@ object LocalModule {
     @Singleton
     fun providePreferenceDataStore(dataStore: DataStore<Preferences>): PreferenceDataStore {
         return PreferenceDataStore(dataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "travelmate_db"
+        ).build()
+    }
+
+    @Provides
+    fun provideUserDao(database: AppDatabase): TravelDao {
+        return database.destinationDao()
     }
 }

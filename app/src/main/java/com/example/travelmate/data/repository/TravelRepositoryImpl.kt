@@ -1,10 +1,11 @@
 package com.example.travelmate.data.repository
 
 import com.example.travelmate.data.mapper.Mapper
-import com.example.travelmate.data.source.local.datastore.TravelLocalDataSource
+import com.example.travelmate.data.source.local.datasource.TravelLocalDataSource
 import com.example.travelmate.data.source.remote.datasource.TravelRemoteDataSource
 import com.example.travelmate.data.source.remote.model.login.request.LoginUserRequest
 import com.example.travelmate.domain.model.destination.DestinationUser
+import com.example.travelmate.domain.model.destination.Itinerary
 import com.example.travelmate.domain.model.login.LoginUser
 import com.example.travelmate.domain.repositories.TravelRepository
 import com.example.travelmate.utils.ResultResponse
@@ -39,8 +40,10 @@ class TravelRepositoryImpl @Inject constructor(
     override suspend fun getToken(): String? = travelLocalDataStore.getToken()
 
     override suspend fun saveToken(token: String) = travelLocalDataStore.saveToken(token)
+
     override suspend fun getAllDestination(
         page: Int,
+        limit: Int,
         token: String,
     ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
         return flow {
@@ -48,17 +51,30 @@ class TravelRepositoryImpl @Inject constructor(
             try {
                 val response = travelRemoteDataSource.getAllDestination(
                     page = page,
+                    limit = limit,
                     token = token
                 )
                 if (response.isSuccessful) {
+                    val remoteDestination = response.body()?.let {
+                        mapper.mapResponseToEntities(it)
+                    } ?: emptyList()
                     val domainDestination = response.body()?.let {
                         mapper.mapResponseToDomain(it)
                     }
-                    emit(ResultResponse.Success(domainDestination?.destinations ?: emptyList()))
+                    travelLocalDataStore.dataSaveDestination(remoteDestination)
+                    emit(ResultResponse.Success(domainDestination?.destinations))
+                } else {
+                    emit(ResultResponse.Error(response.message()))
                 }
             } catch (e: Exception) {
-                emit(ResultResponse.Error(e.message.toString()))
+                val cachedEntities = travelLocalDataStore.getDataDestination()
+                val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
+                emit(ResultResponse.Success(cachedDomain.destinations))
             }
         }
+    }
+
+    override suspend fun saveItinerary(itinerary: Itinerary) {
+        travelLocalDataStore.saveItinerary(mapper.mapDomainToEntities(itinerary))
     }
 }

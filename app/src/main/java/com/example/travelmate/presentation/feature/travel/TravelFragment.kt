@@ -40,6 +40,7 @@ class TravelFragment : Fragment() {
     }
     private lateinit var travelViewModel: TravelViewModel
     private val currentPage = 1
+    private val limitPage = 10
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,8 +67,8 @@ class TravelFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     travelViewModel.isLoading.collect {
                         binding.shimmerDestination.isVisible = it
@@ -89,11 +90,8 @@ class TravelFragment : Fragment() {
                 launch {
                     val token = travelViewModel.getToken()
                     Log.d("TravelFragment", "Get token: $token")
-                    if (!token.isNullOrEmpty()) {
-                        travelViewModel.getAllDestination(
-                            page = currentPage,
-                            token = token
-                        )
+                    if (!token.isNullOrEmpty() && travelViewModel.getAllDestination.value.isNullOrEmpty()) {
+                        travelViewModel.getAllDestination(token = token)
                     } else {
                         Log.e("TravelFragment", "Token is null or empty")
                     }
