@@ -4,4 +4,5 @@
     <string name="text_password">Password</string>
     <string name="text_remember_me">Remember me</string>
     <string name="text_login">Login</string>
+    <string name="text_note">Note</string>
 </resources>

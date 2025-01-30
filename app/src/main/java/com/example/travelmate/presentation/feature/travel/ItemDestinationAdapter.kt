@@ -10,10 +10,16 @@ import com.example.travelmate.databinding.ItemDestinationBinding
 import com.example.travelmate.domain.model.destination.DestinationUser
 import java.util.Locale
 
-class ItemDestinationAdapter :
+class ItemDestinationAdapter(val clickItemListener: (DestinationUser.Destination) -> Unit) :
     ListAdapter<DestinationUser.Destination, ItemDestinationAdapter.DestinationViewHolder>(DIFF_UTIL) {
     inner class DestinationViewHolder(private val binding: ItemDestinationBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnClickListener {
+                clickItemListener(getItem(adapterPosition))
+            }
+        }
+
         fun bind(destination: DestinationUser.Destination) {
             with(binding) {
                 imageViewPhotoUrl.load(destination.photoUrl)

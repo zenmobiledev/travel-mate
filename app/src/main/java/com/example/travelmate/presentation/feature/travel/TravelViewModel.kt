@@ -24,9 +24,6 @@ class TravelViewModel @Inject constructor(
     val getAllDestination: StateFlow<List<DestinationUser.Destination>?> =
         _getAllDestination.asStateFlow()
 
-    private val _token: MutableStateFlow<String?> = MutableStateFlow(null)
-    val token: StateFlow<String?> = _token.asStateFlow()
-
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
@@ -47,8 +44,10 @@ class TravelViewModel @Inject constructor(
                     ResultResponse.Loading -> _isLoading.value = true
                     is ResultResponse.Success -> {
                         _isLoading.value = false
-                        _getAllDestination.value = result.data
-
+                        result.data?.let {
+                            val oldPage = _getAllDestination.value ?: emptyList()
+                            _getAllDestination.value = oldPage + it
+                        }
                     }
 
                     is ResultResponse.Error -> {

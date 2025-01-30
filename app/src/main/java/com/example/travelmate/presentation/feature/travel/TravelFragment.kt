@@ -1,5 +1,6 @@
 package com.example.travelmate.presentation.feature.travel
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentTravelBinding
+import com.example.travelmate.presentation.feature.travel.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -27,7 +29,15 @@ class TravelFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val destinationAdapter by lazy { ItemDestinationAdapter() }
+    private val destinationAdapter by lazy {
+        ItemDestinationAdapter {
+            Toast.makeText(view?.context, "Click: ${it.name}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                putExtra(DetailActivity.EXTRA_DESTINATION, it)
+            }
+            startActivity(intent)
+        }
+    }
     private lateinit var travelViewModel: TravelViewModel
     private val currentPage = 1
 
@@ -78,6 +88,7 @@ class TravelFragment : Fragment() {
 
                 launch {
                     val token = travelViewModel.getToken()
+                    Log.d("TravelFragment", "Get token: $token")
                     if (!token.isNullOrEmpty()) {
                         travelViewModel.getAllDestination(
                             page = currentPage,
