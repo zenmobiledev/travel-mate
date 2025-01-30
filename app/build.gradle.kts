@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -18,6 +20,23 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) localPropertiesFile.inputStream().use {
+            localProperties.load(it)
+        }
+
+        buildConfigField(
+            type = "String",
+            name = "SECRET_APP",
+            value = localProperties["SECRETAPP"].toString()
+        )
+        buildConfigField(
+            type = "String",
+            name = "USER_ID",
+            value = localProperties["USERID"].toString()
+        )
     }
 
     buildTypes {
@@ -58,6 +77,16 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // data store
+    implementation(libs.androidx.datastore.preferences)
+
+    // coil
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
+
+    // shimmer
+    implementation(libs.shimmer)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

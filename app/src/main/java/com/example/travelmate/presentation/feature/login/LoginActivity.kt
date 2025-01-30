@@ -16,8 +16,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.travelmate.R
 import com.example.travelmate.databinding.ActivityLoginBinding
 import com.example.travelmate.presentation.feature.category.CategoryActivity
-import com.example.travelmate.presentation.feature.login.viewmodel.LoginViewModel
-import com.example.travelmate.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.login.viewmodel
+package com.example.travelmate.presentation.feature.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginUserUseCase: LoginUserUseCase) :
+class LoginViewModel @Inject constructor(
+    private val loginUserUseCase: LoginUserUseCase,
+) :
     ViewModel() {
     private val _token: MutableStateFlow<String?> = MutableStateFlow(null)
     val token: StateFlow<String?> = _token.asStateFlow()
@@ -36,7 +38,11 @@ class LoginViewModel @Inject constructor(private val loginUserUseCase: LoginUser
                     ResultResponse.Loading -> _isLoading.value = true
                     is ResultResponse.Success -> {
                         _isLoading.value = false
-                        _token.value = result.data?.token
+                        _token.value = result.data?.token.also {
+                            if (it != null) {
+                                loginUserUseCase.saveToken(it)
+                            }
+                        }
                     }
 
                     is ResultResponse.Error -> {

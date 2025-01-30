@@ -1,4 +1,4 @@
-package com.example.travelmate.domain.model
+package com.example.travelmate.domain.model.login
 
 data class LoginUser(
     val token: String,

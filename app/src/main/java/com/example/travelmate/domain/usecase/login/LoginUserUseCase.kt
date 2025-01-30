@@ -1,7 +1,7 @@
 package com.example.travelmate.domain.usecase.login
 
 import com.example.travelmate.data.source.remote.model.login.request.LoginUserRequest
-import com.example.travelmate.domain.model.LoginUser
+import com.example.travelmate.domain.model.login.LoginUser
 import com.example.travelmate.domain.repositories.TravelRepository
 import com.example.travelmate.utils.ResultResponse
 import kotlinx.coroutines.flow.Flow
@@ -15,4 +15,8 @@ class LoginUserUseCase @Inject constructor(private val repository: TravelReposit
                 password = password
             )
         )
+
+    suspend fun saveToken(token: String) {
+        return repository.saveToken(token)
+    }
 }

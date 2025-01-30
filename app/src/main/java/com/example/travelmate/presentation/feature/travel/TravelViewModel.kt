@@ -1,13 +1,62 @@
 package com.example.travelmate.presentation.feature.travel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.travelmate.domain.model.destination.DestinationUser
+import com.example.travelmate.domain.usecase.destination.DestinationUseCase
+import com.example.travelmate.utils.ResultResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TravelViewModel : ViewModel() {
+@HiltViewModel
+class TravelViewModel @Inject constructor(
+    private val destinationUseCase: DestinationUseCase,
+) : ViewModel() {
+    private val _getAllDestination: MutableStateFlow<List<DestinationUser.Destination>?> =
+        MutableStateFlow(emptyList())
+    val getAllDestination: StateFlow<List<DestinationUser.Destination>?> =
+        _getAllDestination.asStateFlow()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is travel Fragment"
+    private val _token: MutableStateFlow<String?> = MutableStateFlow(null)
+    val token: StateFlow<String?> = _token.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val _errorMessage = MutableSharedFlow<String>()
+    val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
+
+    suspend fun getToken(): String? {
+        return destinationUseCase.getToken()
     }
-    val text: LiveData<String> = _text
+
+    fun getAllDestination(page: Int, token: String) {
+        viewModelScope.launch {
+            destinationUseCase(
+                page = page,
+                token = token
+            ).collect { result ->
+                when (result) {
+                    ResultResponse.Loading -> _isLoading.value = true
+                    is ResultResponse.Success -> {
+                        _isLoading.value = false
+                        _getAllDestination.value = result.data
+
+                    }
+
+                    is ResultResponse.Error -> {
+                        _isLoading.value = false
+                        _errorMessage.emit(result.message)
+                    }
+                }
+            }
+        }
+    }
 }
