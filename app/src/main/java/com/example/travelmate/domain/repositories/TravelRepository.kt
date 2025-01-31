@@ -1,6 +1,5 @@
 package com.example.travelmate.domain.repositories
 
-import com.example.travelmate.data.source.local.model.ItineraryEntity
 import com.example.travelmate.data.source.remote.model.login.request.LoginUserRequest
 import com.example.travelmate.domain.model.destination.DestinationUser
 import com.example.travelmate.domain.model.destination.Itinerary
@@ -23,4 +22,10 @@ interface TravelRepository {
 
     // Itinerary
     suspend fun saveItinerary(itinerary: Itinerary)
+
+    suspend fun getItinerary(): List<Itinerary>
+
+    suspend fun updateItinerary(itinerary: Itinerary)
+
+    suspend fun deleteItinerary(itinerary: Itinerary)
 }

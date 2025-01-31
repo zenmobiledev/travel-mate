@@ -102,6 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="@string/text_description"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/outer_card"
@@ -114,11 +115,33 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@id/text_note"
             app:layout_constraintEnd_toEndOf="@id/outer_card"
             app:layout_constraintStart_toStartOf="@id/outer_card"
             app:layout_constraintTop_toBottomOf="@id/text_description"
             tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_date"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/text_description"
+            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/text_date"
+            app:layout_constraintTop_toBottomOf="@id/text_date"
+            tools:text="@tools:sample/lorem"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/text_note"
@@ -129,8 +152,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/text_description"
-            app:layout_constraintTop_toBottomOf="@id/tv_description"
+            app:layout_constraintStart_toStartOf="@+id/tv_date"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
             tools:visibility="visible" />
 
         <TextView
@@ -144,17 +167,16 @@
             tools:text="@tools:sample/lorem"
             tools:visibility="visible" />
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            app:icon="@drawable/baseline_location_24"
+            android:src="@drawable/baseline_location_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_notes"
             tools:text="Add to itinerary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

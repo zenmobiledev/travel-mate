@@ -2,9 +2,10 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_marginHorizontal="16dp"
     android:background="@android:color/transparent"
     app:cardCornerRadius="16dp"
     app:cardElevation="8dp">
@@ -15,7 +16,7 @@
         android:padding="24dp">
 
         <ImageButton
-            android:id="@+id/btnClose"
+            android:id="@+id/btn_cancel"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -34,7 +35,7 @@
             android:src="@drawable/baseline_date_range_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnClose" />
+            app:layout_constraintTop_toBottomOf="@id/btn_cancel" />
 
         <EditText
             android:id="@+id/edtDate"
@@ -61,34 +62,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edtDate" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_positive"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:gravity="end"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edtNotes">
+            app:cornerRadius="12dp"
+            app:icon="@drawable/outline_save_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edtNotes"
+            app:layout_constraintTop_toBottomOf="@+id/edtNotes"
+            tools:text="POSITIVE" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_negative"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cornerRadius="12dp"
-                tools:text="NEGATIVE" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_negative"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:icon="@drawable/outline_cancel_24"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_positive"
+            app:layout_constraintEnd_toStartOf="@+id/btn_positive"
+            app:layout_constraintTop_toTopOf="@+id/btn_positive"
+            tools:text="NEGATIVE" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_positive"
-                style="@style/Widget.Material3.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                app:cornerRadius="12dp"
-                app:icon="@drawable/outline_save_24"
-                tools:text="POSITIVE" />
-        </LinearLayout>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_theme_error"
+            android:text="@string/text_delete"
+            android:textColor="@color/md_theme_surface"
+            android:visibility="gone"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/outline_delete_24"
+            app:iconTint="@color/md_theme_surface"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_positive"
+            app:layout_constraintEnd_toEndOf="@+id/btn_negative"
+            app:layout_constraintStart_toStartOf="@+id/btn_negative"
+            app:layout_constraintTop_toTopOf="@+id/btn_positive"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

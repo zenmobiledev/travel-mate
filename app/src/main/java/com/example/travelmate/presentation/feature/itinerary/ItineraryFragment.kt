@@ -1,13 +1,15 @@
 package com.example.travelmate.presentation.feature.itinerary
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
+import com.example.travelmate.presentation.feature.travel.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,22 +21,48 @@ class ItineraryFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val itineraryAdapter by lazy {
+        ItemItineraryAdapter {
+            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+                putExtra(DetailActivity.EXTRA_ITINERARY, it)
+            }
+            startActivity(intent)
+        }
+    }
+
+    private lateinit var itineraryViewModel: ItineraryViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
-        val dashboardViewModel =
+        itineraryViewModel =
             ViewModelProvider(this)[ItineraryViewModel::class.java]
-
         _binding = FragmentItineraryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+        setupObserver()
+    }
+
+    private fun setupObserver() {
+        itineraryViewModel.itineraryList.observe(viewLifecycleOwner) {
+            itineraryAdapter.submitList(it)
+        }
+
+        itineraryViewModel.fetchItinerary()
+    }
+
+    private fun setupRecyclerView() {
+        with(binding.rvItinerary) {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = itineraryAdapter
+        }
     }
 
     override fun onDestroyView() {

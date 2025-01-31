@@ -4,9 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -14,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.travelmate.R
 import com.example.travelmate.databinding.FragmentTravelBinding
 import com.example.travelmate.presentation.feature.travel.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +38,6 @@ class TravelFragment : Fragment() {
 
     private val destinationAdapter by lazy {
         ItemDestinationAdapter {
-            Toast.makeText(view?.context, "Click: ${it.name}", Toast.LENGTH_SHORT).show()
             val intent = Intent(requireContext(), DetailActivity::class.java).apply {
                 putExtra(DetailActivity.EXTRA_DESTINATION, it)
             }
@@ -39,8 +45,6 @@ class TravelFragment : Fragment() {
         }
     }
     private lateinit var travelViewModel: TravelViewModel
-    private val currentPage = 1
-    private val limitPage = 10
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +61,44 @@ class TravelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // The menu is displayed on the toolbar
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.top_bar_menu, menu)
+
+                // Set up the search icon
+                val searchItem = menu.findItem(R.id.menu_search)
+                val searchView =
+                    searchItem?.actionView as SearchView
+                setupSearchListener(searchView)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         setupRecyclerView()
         setupObserver()
+    }
+
+    private fun setupSearchListener(searchView: SearchView) {
+        searchView.queryHint = "Search destination"
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(query: String?): Boolean = true
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return if (query != null) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        // submit data to the adapter
+                        Toast.makeText(requireContext(), "Search: $query", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    true
+                } else {
+                    false
+                }
+            }
+        })
     }
 
     private fun setupRecyclerView() {
@@ -91,7 +131,11 @@ class TravelFragment : Fragment() {
                     val token = travelViewModel.getToken()
                     Log.d("TravelFragment", "Get token: $token")
                     if (!token.isNullOrEmpty() && travelViewModel.getAllDestination.value.isNullOrEmpty()) {
-                        travelViewModel.getAllDestination(token = token)
+                        travelViewModel.getAllDestination(
+                            token = token,
+                            page = 1,
+                            limit = 10
+                        )
                     } else {
                         Log.e("TravelFragment", "Token is null or empty")
                     }

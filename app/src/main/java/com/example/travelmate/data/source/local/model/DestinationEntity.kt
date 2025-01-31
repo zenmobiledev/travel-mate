@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 data class DestinationEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val category: String,
-    val description: String,
-    val location: String,
     val name: String,
     val photoUrl: String,
+    val description: String,
+    val location: String,
     val rating: Double,
 )

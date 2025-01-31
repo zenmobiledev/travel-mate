@@ -1,13 +1,16 @@
 package com.example.travelmate.domain.model.destination
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Itinerary(
     val id: Int,
     val name: String,
-    val description: String,
-    val photoUrl: String,
-    val category: String,
-    val rating: Double,
     val date: String,
+    val photo: String,
+    val rating: Double,
+    val description: String,
     val location: String,
-    val notes: String? = null,
-)
+    val notes: String,
+) : Parcelable

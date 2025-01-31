@@ -12,10 +12,12 @@ data class DestinationUser(
         val id: Int,
         val name: String,
         val description: String,
-        val location: String,
-        val category: String,
         val photoUrl: String,
+        val category: String,
         val rating: Double,
+        val location: String,
+        val date: String? = null,
+        val notes: String? = null,
     ) : Parcelable
 
 //    data class Pagination(

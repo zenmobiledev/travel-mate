@@ -64,7 +64,7 @@ class Mapper @Inject constructor() {
                 location = it.location,
                 name = it.name,
                 photoUrl = it.photoUrl,
-                rating = it.rating
+                rating = it.rating,
             )
         }
     }
@@ -85,15 +85,44 @@ class Mapper @Inject constructor() {
         )
     }
 
+    fun mapEntitiesToDomain(entity: List<ItineraryEntity>): List<Itinerary> {
+        return entity.map {
+            Itinerary(
+                id = it.id,
+                name = it.name,
+                date = it.date,
+                location = it.location,
+                notes = it.notes,
+                photo = it.photo,
+                rating = it.rating,
+                description = it.description
+            )
+        }
+    }
+
     // ITINERARY
+    fun mapDomainToEntities(entity: DestinationUser.Destination): DestinationEntity {
+        return DestinationEntity(
+            id = entity.id,
+            name = entity.name,
+            photoUrl = entity.photoUrl,
+            location = entity.location,
+            description = entity.description,
+            category = entity.category,
+            rating = entity.rating
+        )
+    }
+
     fun mapDomainToEntities(entity: Itinerary): ItineraryEntity {
         return ItineraryEntity(
             id = entity.id,
             name = entity.name,
-            photoUrl = entity.photoUrl,
             date = entity.date,
             location = entity.location,
-            notes = entity.notes
+            notes = entity.notes,
+            photo = entity.photo,
+            rating = entity.rating,
+            description = entity.description
         )
     }
 }

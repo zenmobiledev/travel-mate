@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil3.load
@@ -21,7 +23,9 @@ import com.example.travelmate.domain.model.destination.DestinationUser
 import com.example.travelmate.domain.model.destination.Itinerary
 import com.example.travelmate.presentation.feature.travel.TravelViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Locale
 
@@ -44,8 +48,11 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val destination = intent.getParcelableExtra<DestinationUser.Destination>(EXTRA_DESTINATION)
+        val itinerary = intent.getParcelableExtra<Itinerary>(EXTRA_ITINERARY)
         if (destination != null) {
             getDetail(destination)
+        } else if (itinerary != null) {
+            getDetail(itinerary)
         }
 
         binding.toolbarDetail.setNavigationOnClickListener {
@@ -53,17 +60,11 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // Add itinerary
-        addItinerary()
-    }
-
-    private fun addItinerary() {
         binding.fabDetail.setOnClickListener {
-            val destination =
-                intent.getParcelableExtra<DestinationUser.Destination>(EXTRA_DESTINATION)
-            if (destination != null) {
-                showAlertDialog(destination) { itinerary ->
-                    lifecycleScope.launch {
-                        travelViewModel.saveItinerary(itinerary)
+            showAlertDialog(destination = destination) {
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        travelViewModel.saveItinerary(it)
                     }
                 }
             }
@@ -71,7 +72,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun showAlertDialog(
-        destination: DestinationUser.Destination,
+        destination: DestinationUser.Destination?,
         itinerary: Itinerary? = null,
         onPositive: (Itinerary) -> Unit,
     ) {
@@ -100,12 +101,6 @@ class DetailActivity : AppCompatActivity() {
         )
         dateDialog.datePicker.minDate = calendar.timeInMillis
 
-        itinerary?.let {
-            dialogBinding.edtDate.setText(it.date)
-            dialogBinding.edtNotes.setText(it.notes)
-            getDate = it.date
-        }
-
         dialogBinding.edtDate.setOnClickListener {
             dateDialog.show()
         }
@@ -126,24 +121,21 @@ class DetailActivity : AppCompatActivity() {
                 val noteText = dialogBinding.edtNotes.text.toString()
 
                 if (dateText.isNotEmpty() && noteText.isNotEmpty()) {
-                    val updateItinerary = Itinerary(
-                        id = destination.id,
-                        name = destination.name,
-                        photoUrl = destination.photoUrl,
-                        date = getDate.toString(),
-                        location = destination.location,
-                        notes = noteText,
-                        description = destination.description,
-                        category = destination.category,
-                        rating = destination.rating
-                    )
-
-                    onPositive(updateItinerary).apply {
-                        Toast.makeText(
-                            this@DetailActivity,
-                            if (itinerary == null) "Itinerary saved" else "Itinerary updated",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    val updateItinerary =
+                        destination?.let {
+                            Itinerary(
+                                id = destination.id,
+                                name = destination.name,
+                                date = getDate.toString(),
+                                location = destination.location,
+                                notes = noteText,
+                                photo = destination.photoUrl,
+                                rating = destination.rating,
+                                description = destination.description
+                            )
+                        }
+                    if (updateItinerary != null) {
+                        onPositive(updateItinerary)
                     }
                     dialog.dismiss()
                     finish()
@@ -155,23 +147,61 @@ class DetailActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.show()
         }
+
+        dialogBinding.btnDelete.apply {
+            isVisible = itinerary != null
+            setOnClickListener {
+                lifecycleScope.launch {
+                    withContext(Dispatchers.IO) {
+                        itinerary?.let {
+                            travelViewModel.deleteItinerary(it)
+                        }
+                    }
+                }
+                dialog.dismiss()
+            }
+        }
+
+        Log.d("DetailActivity", "GET: $itinerary")
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
     }
 
-    private fun getDetail(destination: DestinationUser.Destination) {
-        with(binding) {
-            toolbarDetail.title = destination.category
-            imageViewPhotoUrl.load(destination.photoUrl)
-            tvName.text = destination.name
-            tvLocation.text = destination.location
-            tvRating.text = String.format(Locale.US, "%.1f", destination.rating)
-            tvDescription.text = destination.description
+    private fun getDetail(data: Any) {
+        when (data) {
+            is DestinationUser.Destination -> {
+                with(binding) {
+                    toolbarDetail.title = data.category
+                    imageViewPhotoUrl.load(data.photoUrl)
+                    tvName.text = data.name
+                    tvLocation.text = data.location
+                    tvRating.text = String.format(Locale.US, "%.1f", data.rating)
+                    tvDescription.text = data.description
+                }
+            }
+
+            is Itinerary -> {
+                with(binding) {
+                    toolbarDetail.title = "Itinerary"
+                    binding.textNote.isVisible = true
+                    binding.tvNotes.isVisible = true
+                    binding.textDate.isVisible = true
+                    binding.tvDate.isVisible = true
+                    imageViewPhotoUrl.load(data.photo)
+                    tvName.text = data.name
+                    tvLocation.text = data.location
+                    tvDescription.text = data.description
+                    tvRating.text = String.format(Locale.US, "%.1f", data.rating)
+                    tvDate.text = data.date
+                    tvNotes.text = data.notes
+                }
+            }
         }
     }
 
     companion object {
         const val EXTRA_DESTINATION = "extra_destination"
+        const val EXTRA_ITINERARY = "extra_itinerary"
     }
 }

@@ -8,4 +8,16 @@ class ItineraryUseCase @Inject constructor(private val travelRepository: TravelR
     suspend fun saveItinerary(itinerary: Itinerary) {
         travelRepository.saveItinerary(itinerary)
     }
+
+    suspend fun getItinerary(): List<Itinerary> {
+        return travelRepository.getItinerary()
+    }
+
+    suspend fun updateItinerary(itinerary: Itinerary) {
+        travelRepository.updateItinerary(itinerary)
+    }
+
+    suspend fun deleteItinerary(itinerary: Itinerary) {
+        travelRepository.deleteItinerary(itinerary)
+    }
 }

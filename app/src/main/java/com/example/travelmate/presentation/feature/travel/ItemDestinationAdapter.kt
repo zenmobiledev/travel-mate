@@ -26,9 +26,7 @@ class ItemDestinationAdapter(val clickItemListener: (DestinationUser.Destination
                 tvCategory.text = destination.category
                 tvName.text = destination.name
                 tvLocation.text = destination.location
-
                 tvRating.text = String.format(Locale.US, "%.1f", destination.rating)
-//                tvRating.text = destination.rating.toString()
             }
         }
     }

@@ -41,7 +41,19 @@ class TravelViewModel @Inject constructor(
         return itineraryUseCase.saveItinerary(itinerary)
     }
 
-    fun getAllDestination(page: Int = 1, limit: Int = 10, token: String) {
+    suspend fun getItinerary() {
+        itineraryUseCase.getItinerary()
+    }
+
+    suspend fun updateItinerary(itinerary: Itinerary) {
+        return itineraryUseCase.updateItinerary(itinerary)
+    }
+
+    suspend fun deleteItinerary(itinerary: Itinerary) {
+        return itineraryUseCase.deleteItinerary(itinerary)
+    }
+
+    fun getAllDestination(page: Int, limit: Int, token: String) {
         viewModelScope.launch {
             destinationUseCase(
                 page = page,
