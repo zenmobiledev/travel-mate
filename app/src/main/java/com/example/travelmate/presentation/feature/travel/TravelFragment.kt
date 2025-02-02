@@ -129,13 +129,8 @@ class TravelFragment : Fragment() {
 
                 launch {
                     val token = travelViewModel.getToken()
-                    Log.d("TravelFragment", "Get token: $token")
                     if (!token.isNullOrEmpty() && travelViewModel.getAllDestination.value.isNullOrEmpty()) {
-                        travelViewModel.getAllDestination(
-                            token = token,
-                            page = 1,
-                            limit = 10
-                        )
+                        travelViewModel.fetchDestinations(page = 1, token = token)
                     } else {
                         Log.e("TravelFragment", "Token is null or empty")
                     }

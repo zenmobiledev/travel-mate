@@ -3,21 +3,28 @@ package com.example.travelmate.data.source.local.preference
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.travelmate.data.source.local.entity.LoginUserEntity
 import kotlinx.coroutines.flow.first
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "travel_pref")
 
 object DataStoreConstants {
+    // USER
     val TOKEN = stringPreferencesKey("TOKEN")
-    val BEACH = stringPreferencesKey("BEACH")
-    val MOUNTAIN = stringPreferencesKey("MOUNTAIN")
-    val CULTURAL = stringPreferencesKey("CULTURAL")
-    val CULINARY = stringPreferencesKey("CULINARY")
-}
+    val NAME = stringPreferencesKey("NAME")
+    val EMAIL = stringPreferencesKey("EMAIL")
+    val PHOTO_URL = stringPreferencesKey("PHOTO_URL")
 
+    // CATEGORY
+    val BEACH = booleanPreferencesKey("BEACH")
+    val MOUNTAIN = booleanPreferencesKey("MOUNTAIN")
+    val CULTURAL = booleanPreferencesKey("CULTURAL")
+    val CULINARY = booleanPreferencesKey("CULINARY")
+}
 
 class PreferenceDataStore(private val dataStore: DataStore<Preferences>) {
     suspend fun setToken(token: String) {
@@ -28,39 +35,58 @@ class PreferenceDataStore(private val dataStore: DataStore<Preferences>) {
 
     suspend fun getToken(): String? = dataStore.data.first()[DataStoreConstants.TOKEN]
 
-    suspend fun setBeach(beach: Boolean) {
+    suspend fun setUser(user: LoginUserEntity.User) {
         dataStore.edit {
-            it[DataStoreConstants.BEACH] = beach.toString()
+            it[DataStoreConstants.NAME] = user.name
+            it[DataStoreConstants.EMAIL] = user.email
+            it[DataStoreConstants.PHOTO_URL] = user.photoUrl ?: ""
         }
     }
 
-    suspend fun getBeach(): Boolean =
-        dataStore.data.first()[DataStoreConstants.BEACH]?.toBoolean() ?: false
+    suspend fun getUser(): LoginUserEntity.User {
+        val preferences = dataStore.data.first()
+        val name = preferences[DataStoreConstants.NAME] ?: ""
+        val email = preferences[DataStoreConstants.EMAIL] ?: ""
+        val photoUrl = preferences[DataStoreConstants.PHOTO_URL] ?: ""
+        return LoginUserEntity.User(name, email, photoUrl)
+    }
 
-    suspend fun setMountain(mountain: Boolean) {
+    suspend fun setCategory(
+        beach: Boolean,
+        mountain: Boolean,
+        cultural: Boolean,
+        culinary: Boolean,
+    ) {
         dataStore.edit {
-            it[DataStoreConstants.MOUNTAIN] = mountain.toString()
+            it[DataStoreConstants.BEACH] = beach
+            it[DataStoreConstants.MOUNTAIN] = mountain
+            it[DataStoreConstants.CULTURAL] = cultural
+            it[DataStoreConstants.CULINARY] = culinary
         }
     }
 
-    suspend fun getMountain(): Boolean =
-        dataStore.data.first()[DataStoreConstants.MOUNTAIN]?.toBoolean() ?: false
-
-    suspend fun setCultural(cultural: Boolean) {
-        dataStore.edit {
-            it[DataStoreConstants.CULTURAL] = cultural.toString()
-        }
+    suspend fun getCategory(): Map<String, Boolean> {
+        val preferences = dataStore.data.first()
+        return mapOf(
+            "Beach" to (preferences[DataStoreConstants.BEACH] ?: false),
+            "Mountain" to (preferences[DataStoreConstants.MOUNTAIN] ?: false),
+            "Cultural" to (preferences[DataStoreConstants.CULTURAL] ?: false),
+            "Culinary" to (preferences[DataStoreConstants.CULINARY] ?: false)
+        )
     }
 
-    suspend fun getCultural(): Boolean =
-        dataStore.data.first()[DataStoreConstants.CULTURAL]?.toBoolean() ?: false
-
-    suspend fun setCulinary(culinary: Boolean) {
-        dataStore.edit {
-            it[DataStoreConstants.CULINARY] = culinary.toString()
+    suspend fun logout() {
+        dataStore.edit { preferences ->
+            listOf(
+                DataStoreConstants.TOKEN,
+                DataStoreConstants.NAME,
+                DataStoreConstants.EMAIL,
+                DataStoreConstants.PHOTO_URL,
+                DataStoreConstants.BEACH,
+                DataStoreConstants.MOUNTAIN,
+                DataStoreConstants.CULTURAL,
+                DataStoreConstants.CULINARY,
+            ).forEach { preferences.remove(it) }
         }
     }
-
-    suspend fun getCulinary(): Boolean =
-        dataStore.data.first()[DataStoreConstants.CULINARY]?.toBoolean() ?: false
 }

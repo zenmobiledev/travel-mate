@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
-import com.example.travelmate.presentation.feature.itinerary.ItemItineraryAdapter
-import com.example.travelmate.presentation.feature.itinerary.ItineraryViewModel
+import com.example.travelmate.presentation.feature.itinerary.adapter.ItemItineraryAdapter
 import com.example.travelmate.presentation.feature.itinerary.view.activity.ItineraryDetailActivity
+import com.example.travelmate.presentation.feature.itinerary.viewmodel.ItineraryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

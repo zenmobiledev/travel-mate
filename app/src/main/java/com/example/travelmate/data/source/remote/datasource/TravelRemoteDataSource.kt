@@ -7,5 +7,15 @@ import retrofit2.Response
 
 interface TravelRemoteDataSource {
     suspend fun loginUser(loginUserRequest: LoginUserRequest): Response<LoginUserResponse>
-    suspend fun getAllDestination(page: Int, limit: Int,token: String): Response<DestinationResponse>
+    suspend fun getAllDestination(
+        page: Int,
+        limit: Int,
+        token: String,
+    ): Response<DestinationResponse>
+
+    suspend fun getDestinations(
+        page: Int,
+        category: String,
+        token: String,
+    ): Response<DestinationResponse>
 }

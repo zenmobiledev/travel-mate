@@ -1,13 +1,26 @@
 package com.example.travelmate.presentation.feature.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.travelmate.domain.model.login.LoginUser
+import com.example.travelmate.domain.usecase.login.LoginUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(
+    private val loginUserUseCase: LoginUserUseCase,
+) : ViewModel() {
+    private val _user = MutableStateFlow<LoginUser.User?>(null)
+    val user: StateFlow<LoginUser.User?> = _user.asStateFlow()
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is profile Fragment"
+    suspend fun logout() {
+        loginUserUseCase.logout()
     }
-    val text: LiveData<String> = _text
+
+    suspend fun profileUser() {
+        _user.value = loginUserUseCase.getUser()
+    }
 }

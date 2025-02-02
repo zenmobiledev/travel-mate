@@ -2,6 +2,7 @@ package com.example.travelmate.data.mapper
 
 import com.example.travelmate.data.source.local.entity.DestinationEntity
 import com.example.travelmate.data.source.local.entity.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.LoginUserEntity
 import com.example.travelmate.data.source.remote.model.destination.DestinationResponse
 import com.example.travelmate.data.source.remote.model.login.response.LoginUserResponse
 import com.example.travelmate.domain.model.destination.DestinationUser
@@ -23,6 +24,23 @@ class Mapper @Inject constructor() {
             name = user.email,
             email = user.name,
             photoUrl = user.photoUrl ?: ""
+        )
+    }
+
+    // USER
+    fun mapDomainToEntities(user: LoginUser.User): LoginUserEntity.User {
+        return LoginUserEntity.User(
+            name = user.name,
+            email = user.email,
+            photoUrl = user.photoUrl
+        )
+    }
+
+    fun mapEntitiesToDomain(entity: LoginUserEntity.User): LoginUser.User {
+        return LoginUser.User(
+            name = entity.name,
+            email = entity.email,
+            photoUrl = entity.photoUrl
         )
     }
 

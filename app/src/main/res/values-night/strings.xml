@@ -11,4 +11,11 @@
     <string name="detail_destination">Detail Destination</string>
     <string name="text_add_to_itinerary">Add to itinerary</string>
     <string name="text_edit_itinerary">Edit itinerary</string>
+    <string name="text_change_destination">Change Destination</string>
+    <string name="text_logout">Logout</string>
+    <string name="text_beach">Beach</string>
+    <string name="text_cultural">Cultural</string>
+    <string name="text_mountain">Mountain</string>
+    <string name="text_culinary">Culinary</string>
+    <string name="text_start_journey">Start journey</string>
 </resources>

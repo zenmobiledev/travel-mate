@@ -12,11 +12,22 @@ interface TravelRepository {
     suspend fun loginUser(loginUserRequest: LoginUserRequest): Flow<ResultResponse<LoginUser>>
     suspend fun getToken(): String?
     suspend fun saveToken(token: String)
+    suspend fun logout()
+    suspend fun setUser(user: LoginUser.User)
+    suspend fun getUser(): LoginUser.User
+    suspend fun saveCategory(
+        beach: Boolean,
+        mountain: Boolean,
+        cultural: Boolean,
+        culinary: Boolean,
+    )
 
-    // Destination
-    suspend fun getAllDestination(
+    suspend fun getCategory(): Map<String, Boolean>
+
+    suspend fun getDestinations(
         page: Int,
         limit: Int,
+        category: String? = null,
         token: String,
     ): Flow<ResultResponse<List<DestinationUser.Destination>>>
 

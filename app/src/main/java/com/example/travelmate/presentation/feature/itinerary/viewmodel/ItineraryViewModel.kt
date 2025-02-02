@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.itinerary
+package com.example.travelmate.presentation.feature.itinerary.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

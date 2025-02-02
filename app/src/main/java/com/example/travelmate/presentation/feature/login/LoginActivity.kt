@@ -16,7 +16,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.travelmate.R
 import com.example.travelmate.databinding.ActivityLoginBinding
 import com.example.travelmate.presentation.feature.category.CategoryActivity
-import com.example.travelmate.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
@@ -35,9 +34,8 @@ class LoginActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     val token = loginViewModel.getToken()
                     if (token != null) {
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, CategoryActivity::class.java))
                     }
-                    println("Check: $token")
                 }
                 false
             }
@@ -91,9 +89,21 @@ class LoginActivity : AppCompatActivity() {
                 launch {
                     loginViewModel.token.filterNotNull().collect {
                         if (it.isNotEmpty()) {
-                            startActivity(Intent(this@LoginActivity, CategoryActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@LoginActivity,
+                                    CategoryActivity::class.java
+                                )
+                            )
                             finish()
                         }
+                    }
+                }
+
+                launch {
+                    loginViewModel.user.filterNotNull().collect {
+                        Toast.makeText(this@LoginActivity, "Hi ${it.email}", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }

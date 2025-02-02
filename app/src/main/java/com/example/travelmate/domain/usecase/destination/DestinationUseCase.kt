@@ -10,14 +10,26 @@ class DestinationUseCase @Inject constructor(private val travelRepository: Trave
     suspend operator fun invoke(
         page: Int,
         limit: Int,
+        category: String? = null,
         token: String,
     ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
-        return travelRepository.getAllDestination(
+        return travelRepository.getDestinations(
             page = page,
             limit = limit,
             token = token
         )
     }
+
+//    suspend operator fun invoke(
+//        page: Int,
+//        category: String,
+//        token: String,
+//    ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
+//        return travelRepository.getDestination(
+//            page = page,
+//            token = token
+//        )
+//    }
 
     suspend fun getToken(): String? {
         return travelRepository.getToken()
