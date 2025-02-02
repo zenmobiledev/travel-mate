@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TravelMate"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.feature.itinerary.view.activity.ItineraryDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.feature.travel.detail.DetailActivity"
             android:exported="false" />
         <activity

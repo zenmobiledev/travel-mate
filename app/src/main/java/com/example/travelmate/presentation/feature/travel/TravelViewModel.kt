@@ -8,12 +8,16 @@ import com.example.travelmate.domain.usecase.destination.DestinationUseCase
 import com.example.travelmate.domain.usecase.itinerary.ItineraryUseCase
 import com.example.travelmate.utils.ResultResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,10 +43,6 @@ class TravelViewModel @Inject constructor(
 
     suspend fun saveItinerary(itinerary: Itinerary) {
         return itineraryUseCase.saveItinerary(itinerary)
-    }
-
-    suspend fun getItinerary() {
-        itineraryUseCase.getItinerary()
     }
 
     suspend fun updateItinerary(itinerary: Itinerary) {
@@ -78,4 +78,8 @@ class TravelViewModel @Inject constructor(
             }
         }
     }
+
+    fun getItinerary(destinationId: String): Flow<Itinerary?> = flow {
+        emit(itineraryUseCase.getItinerary().find { it.id.toString() == destinationId })
+    }.flowOn(Dispatchers.IO)
 }

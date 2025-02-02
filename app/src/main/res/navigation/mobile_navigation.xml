@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_itinerary"
-        android:name="com.example.travelmate.presentation.feature.itinerary.ItineraryFragment"
+        android:name="com.example.travelmate.presentation.feature.itinerary.view.fragment.ItineraryFragment"
         android:label="@string/title_itinerary"
         tools:layout="@layout/fragment_itinerary" />
 

@@ -12,4 +12,7 @@
     <string name="text_date">Date</string>
     <string name="text_description">Description</string>
     <string name="text_delete">Delete</string>
+    <string name="detail_destination">Detail Destination</string>
+    <string name="text_add_to_itinerary">Add to itinerary</string>
+    <string name="text_edit_itinerary">Edit itinerary</string>
 </resources>

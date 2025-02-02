@@ -1,10 +1,10 @@
 package com.example.travelmate.presentation.feature.travel.detail
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -22,6 +22,7 @@ import com.example.travelmate.databinding.CustomDialogBinding
 import com.example.travelmate.domain.model.destination.DestinationUser
 import com.example.travelmate.domain.model.destination.Itinerary
 import com.example.travelmate.presentation.feature.travel.TravelViewModel
+import com.example.travelmate.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,25 +50,70 @@ class DetailActivity : AppCompatActivity() {
 
         val destination = intent.getParcelableExtra<DestinationUser.Destination>(EXTRA_DESTINATION)
         val itinerary = intent.getParcelableExtra<Itinerary>(EXTRA_ITINERARY)
-        if (destination != null) {
-            getDetail(destination)
-        } else if (itinerary != null) {
-            getDetail(itinerary)
+        when {
+            destination != null -> getDetail(destination)
+            itinerary != null -> getDetail(itinerary)
         }
 
         binding.toolbarDetail.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Add itinerary
-        binding.fabDetail.setOnClickListener {
-            showAlertDialog(destination = destination) {
-                lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        travelViewModel.saveItinerary(it)
+        lifecycleScope.launch {
+            travelViewModel.getItinerary((destination?.id).toString())
+                .collect { newItinerary ->
+                    if (newItinerary != null) {
+                        binding.fabDetail.setImageResource(R.drawable.outline_edit_24)
+                        binding.fabDetail.setOnClickListener {
+                            showAlertDialog(destination = destination, itinerary = newItinerary) {
+                                lifecycleScope.launch {
+                                    withContext(Dispatchers.IO) {
+                                        travelViewModel.updateItinerary(it)
+                                    }
+                                }
+                                Toast.makeText(
+                                    this@DetailActivity,
+                                    "Your itinerary update was successfully.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    } else {
+                        if (itinerary != null) {
+                            binding.fabDetail.setImageResource(R.drawable.outline_edit_24)
+                            binding.fabDetail.setOnClickListener {
+                                showAlertDialog(destination = destination, itinerary = itinerary) {
+                                    lifecycleScope.launch {
+                                        withContext(Dispatchers.IO) {
+                                            travelViewModel.updateItinerary(it)
+                                        }
+                                    }
+                                    Toast.makeText(
+                                        this@DetailActivity,
+                                        "Your itinerary update was successfully.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        } else {
+                            binding.fabDetail.setImageResource(R.drawable.outline_add_itinerary_24)
+                            binding.fabDetail.setOnClickListener {
+                                showAlertDialog(destination = destination) {
+                                    lifecycleScope.launch {
+                                        withContext(Dispatchers.IO) {
+                                            travelViewModel.saveItinerary(it)
+                                        }
+                                    }
+                                    Toast.makeText(
+                                        this@DetailActivity,
+                                        "Your itinerary save was successfully.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -82,6 +128,8 @@ class DetailActivity : AppCompatActivity() {
 
         val dialog = alertDialogBuilder.create()
         dialog.setCancelable(false)
+        dialogBinding.textTitle.text =
+            if (itinerary == null) "Add Itinerary" else "Edit Itinerary"
 
         // Date
         val calendar = Calendar.getInstance()
@@ -100,6 +148,12 @@ class DetailActivity : AppCompatActivity() {
             yyyy, mm, dd
         )
         dateDialog.datePicker.minDate = calendar.timeInMillis
+
+        itinerary?.let {
+            dialogBinding.edtDate.setText(it.date)
+            dialogBinding.edtNotes.setText(it.notes)
+            getDate = it.date
+        }
 
         dialogBinding.edtDate.setOnClickListener {
             dateDialog.show()
@@ -129,7 +183,7 @@ class DetailActivity : AppCompatActivity() {
                                 date = getDate.toString(),
                                 location = destination.location,
                                 notes = noteText,
-                                photo = destination.photoUrl,
+                                photoUrl = destination.photoUrl,
                                 rating = destination.rating,
                                 description = destination.description
                             )
@@ -149,21 +203,47 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
+        dialogBinding.btnNegative.apply {
+            setOnClickListener {
+                dialog.cancel()
+            }
+        }
+
         dialogBinding.btnDelete.apply {
             isVisible = itinerary != null
             setOnClickListener {
                 lifecycleScope.launch {
-                    withContext(Dispatchers.IO) {
-                        itinerary?.let {
+                    itinerary?.let {
+                        withContext(Dispatchers.IO) {
                             travelViewModel.deleteItinerary(it)
                         }
                     }
                 }
-                dialog.dismiss()
+                dialog.dismiss().apply {
+                    finish()
+                    startActivity(Intent(this@DetailActivity, MainActivity::class.java))
+                }
+
+                Toast.makeText(
+                    this@DetailActivity,
+                    "Your itinerary delete was successfully.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
-        Log.d("DetailActivity", "GET: $itinerary")
+        dialogBinding.btnCancel.apply {
+            isVisible = itinerary != null
+            setOnClickListener {
+                dialog.cancel()
+                Toast.makeText(
+                    this@DetailActivity,
+                    "Your itinerary update was cancelled.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
@@ -183,18 +263,11 @@ class DetailActivity : AppCompatActivity() {
 
             is Itinerary -> {
                 with(binding) {
-                    toolbarDetail.title = "Itinerary"
-                    binding.textNote.isVisible = true
-                    binding.tvNotes.isVisible = true
-                    binding.textDate.isVisible = true
-                    binding.tvDate.isVisible = true
-                    imageViewPhotoUrl.load(data.photo)
+                    imageViewPhotoUrl.load(data.photoUrl)
                     tvName.text = data.name
                     tvLocation.text = data.location
                     tvDescription.text = data.description
                     tvRating.text = String.format(Locale.US, "%.1f", data.rating)
-                    tvDate.text = data.date
-                    tvNotes.text = data.notes
                 }
             }
         }

@@ -3,8 +3,8 @@ package com.example.travelmate.data.source.local.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.travelmate.data.source.local.dao.TravelDao
-import com.example.travelmate.data.source.local.model.DestinationEntity
-import com.example.travelmate.data.source.local.model.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.DestinationEntity
+import com.example.travelmate.data.source.local.entity.ItineraryEntity
 
 @Database(
     entities = [DestinationEntity::class, ItineraryEntity::class],

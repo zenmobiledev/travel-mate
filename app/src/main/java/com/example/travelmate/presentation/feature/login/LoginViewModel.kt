@@ -28,6 +28,10 @@ class LoginViewModel @Inject constructor(
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
 
+    suspend fun getToken(): String? {
+        return loginUserUseCase.getToken()
+    }
+
     fun loginUser(email: String, password: String) {
         viewModelScope.launch {
             loginUserUseCase(

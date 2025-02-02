@@ -1,5 +1,6 @@
 package com.example.travelmate.data.repository
 
+import android.util.Log
 import com.example.travelmate.data.mapper.Mapper
 import com.example.travelmate.data.source.local.datasource.TravelLocalDataSource
 import com.example.travelmate.data.source.remote.datasource.TravelRemoteDataSource
@@ -37,7 +38,10 @@ class TravelRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getToken(): String? = travelLocalDataStore.getToken()
+    override suspend fun getToken(): String? {
+        Log.d("RepositoryImpl", "getToken: ${travelLocalDataStore.getToken()}")
+        return travelLocalDataStore.getToken()
+    }
 
     override suspend fun saveToken(token: String) = travelLocalDataStore.saveToken(token)
 

@@ -1,7 +1,7 @@
 package com.example.travelmate.data.mapper
 
-import com.example.travelmate.data.source.local.model.DestinationEntity
-import com.example.travelmate.data.source.local.model.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.DestinationEntity
+import com.example.travelmate.data.source.local.entity.ItineraryEntity
 import com.example.travelmate.data.source.remote.model.destination.DestinationResponse
 import com.example.travelmate.data.source.remote.model.login.response.LoginUserResponse
 import com.example.travelmate.domain.model.destination.DestinationUser
@@ -85,6 +85,7 @@ class Mapper @Inject constructor() {
         )
     }
 
+    // ITINERARY
     fun mapEntitiesToDomain(entity: List<ItineraryEntity>): List<Itinerary> {
         return entity.map {
             Itinerary(
@@ -93,24 +94,11 @@ class Mapper @Inject constructor() {
                 date = it.date,
                 location = it.location,
                 notes = it.notes,
-                photo = it.photo,
+                photoUrl = it.photoUrl,
                 rating = it.rating,
                 description = it.description
             )
         }
-    }
-
-    // ITINERARY
-    fun mapDomainToEntities(entity: DestinationUser.Destination): DestinationEntity {
-        return DestinationEntity(
-            id = entity.id,
-            name = entity.name,
-            photoUrl = entity.photoUrl,
-            location = entity.location,
-            description = entity.description,
-            category = entity.category,
-            rating = entity.rating
-        )
     }
 
     fun mapDomainToEntities(entity: Itinerary): ItineraryEntity {
@@ -120,7 +108,20 @@ class Mapper @Inject constructor() {
             date = entity.date,
             location = entity.location,
             notes = entity.notes,
-            photo = entity.photo,
+            photoUrl = entity.photoUrl,
+            rating = entity.rating,
+            description = entity.description
+        )
+    }
+
+    fun mapEntitiesToDomain(entity: ItineraryEntity): Itinerary {
+        return Itinerary(
+            id = entity.id,
+            name = entity.name,
+            date = entity.date,
+            location = entity.location,
+            notes = entity.notes,
+            photoUrl = entity.photoUrl,
             rating = entity.rating,
             description = entity.description
         )

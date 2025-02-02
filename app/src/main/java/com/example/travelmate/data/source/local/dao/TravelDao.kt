@@ -3,10 +3,11 @@ package com.example.travelmate.data.source.local.dao
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.travelmate.data.source.local.model.DestinationEntity
-import com.example.travelmate.data.source.local.model.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.DestinationEntity
+import com.example.travelmate.data.source.local.entity.ItineraryEntity
 
 @Dao
 interface TravelDao {
@@ -18,7 +19,7 @@ interface TravelDao {
     suspend fun getDestination(): List<DestinationEntity>
 
     // ITINERARY
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItinerary(itinerary: ItineraryEntity)
 
     @Query("SELECT * FROM itineraryentity")

@@ -1,4 +1,4 @@
-package com.example.travelmate.data.source.local.model
+package com.example.travelmate.data.source.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,6 +11,6 @@ data class ItineraryEntity(
     val location: String,
     val notes: String,
     val rating: Double,
-    val description: String,
-    val photo: String,
+    val description: String? = null,
+    val photoUrl: String,
 )

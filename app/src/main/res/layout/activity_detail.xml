@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,176 +7,132 @@
     android:layout_height="match_parent"
     tools:context=".presentation.feature.travel.detail.DetailActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_detail"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/outline_arrow_back_24"
-            app:title="Category" />
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/outer_card"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_detail"
-            tools:layout_editor_absoluteX="8dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_detail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/outline_arrow_back_24"
+                app:title="Category" />
 
-                <ImageView
-                    android:id="@+id/imageView_photo_url"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/outer_card"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_detail"
+                tools:layout_editor_absoluteX="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    tools:src="@tools:sample/backgrounds/scenic" />
+                    android:layout_height="match_parent">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:cardCornerRadius="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <ImageView
+                        android:id="@+id/imageView_photo_url"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        tools:src="@tools:sample/backgrounds/scenic" />
 
-                        <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:maxLines="1"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_rating"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Borobudur Temple" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
-                        <TextView
-                            android:id="@+id/tv_location"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:maxLines="1"
-                            app:drawableStartCompat="@drawable/baseline_location_24"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/tv_rating"
-                            app:layout_constraintStart_toStartOf="@+id/tv_name"
-                            app:layout_constraintTop_toBottomOf="@id/tv_name"
-                            tools:text="Magelang, Central Java" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <TextView
-                            android:id="@+id/tv_rating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:drawableStart="@drawable/baseline_star_24"
-                            android:textSize="16sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/tv_name"
-                            tools:text="4.7" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:maxLines="1"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_rating"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Borobudur Temple" />
 
-        <TextView
-            android:id="@+id/text_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/text_description"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/outer_card"
-            app:layout_constraintTop_toBottomOf="@id/outer_card"
-            tools:text="Description" />
+                            <TextView
+                                android:id="@+id/tv_location"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:maxLines="1"
+                                app:drawableStartCompat="@drawable/baseline_location_24"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/tv_rating"
+                                app:layout_constraintStart_toStartOf="@+id/tv_name"
+                                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                                tools:text="Magelang, Central Java" />
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@id/outer_card"
-            app:layout_constraintStart_toStartOf="@id/outer_card"
-            app:layout_constraintTop_toBottomOf="@id/text_description"
-            tools:text="@tools:sample/lorem" />
+                            <TextView
+                                android:id="@+id/tv_rating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:drawableStart="@drawable/baseline_star_24"
+                                android:textSize="16sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tv_name"
+                                tools:text="4.7" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/text_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/text_date"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/text_description"
-            app:layout_constraintTop_toBottomOf="@id/tv_description"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_description"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/outer_card"
+                app:layout_constraintTop_toBottomOf="@id/outer_card"
+                tools:text="Description" />
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/text_date"
-            app:layout_constraintTop_toBottomOf="@id/text_date"
-            tools:text="@tools:sample/lorem"
-            tools:visibility="visible" />
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/outer_card"
+                app:layout_constraintStart_toStartOf="@id/outer_card"
+                app:layout_constraintTop_toBottomOf="@id/text_description"
+                tools:text="@tools:sample/lorem" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/text_note"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/text_note"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@+id/tv_date"
-            app:layout_constraintTop_toBottomOf="@id/tv_date"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/fab_detail"
-            app:layout_constraintStart_toStartOf="@+id/text_note"
-            app:layout_constraintTop_toBottomOf="@id/text_note"
-            tools:text="@tools:sample/lorem"
-            tools:visibility="visible" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_detail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/baseline_location_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Add to itinerary" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp" />
+</FrameLayout>

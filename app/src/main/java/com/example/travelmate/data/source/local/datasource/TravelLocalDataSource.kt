@@ -1,7 +1,7 @@
 package com.example.travelmate.data.source.local.datasource
 
-import com.example.travelmate.data.source.local.model.DestinationEntity
-import com.example.travelmate.data.source.local.model.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.DestinationEntity
+import com.example.travelmate.data.source.local.entity.ItineraryEntity
 
 interface TravelLocalDataSource {
     suspend fun getToken(): String?

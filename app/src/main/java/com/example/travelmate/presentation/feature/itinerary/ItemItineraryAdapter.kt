@@ -23,10 +23,10 @@ class ItemItineraryAdapter(val clickItemListener: (Itinerary) -> Unit) :
         fun bind(itinerary: Itinerary) {
             with(binding) {
                 tvName.text = itinerary.name
-                imageViewPhotoUrl.load(itinerary.photo)
+                imageViewPhotoUrl.load(itinerary.photoUrl)
                 tvDate.text = itinerary.date
                 tvLocation.text = itinerary.location
-                tvNotes.text = itinerary.notes
+                tvNote.text = itinerary.notes
             }
         }
     }

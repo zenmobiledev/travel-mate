@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.itinerary
+package com.example.travelmate.presentation.feature.itinerary.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
-import com.example.travelmate.presentation.feature.travel.detail.DetailActivity
+import com.example.travelmate.presentation.feature.itinerary.ItemItineraryAdapter
+import com.example.travelmate.presentation.feature.itinerary.ItineraryViewModel
+import com.example.travelmate.presentation.feature.itinerary.view.activity.ItineraryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,8 +25,8 @@ class ItineraryFragment : Fragment() {
 
     private val itineraryAdapter by lazy {
         ItemItineraryAdapter {
-            val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-                putExtra(DetailActivity.EXTRA_ITINERARY, it)
+            val intent = Intent(requireContext(), ItineraryDetailActivity::class.java).apply {
+                putExtra(ItineraryDetailActivity.EXTRA_ITINERARY, it)
             }
             startActivity(intent)
         }

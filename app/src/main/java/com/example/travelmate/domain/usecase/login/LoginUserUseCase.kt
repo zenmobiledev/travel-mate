@@ -19,4 +19,8 @@ class LoginUserUseCase @Inject constructor(private val repository: TravelReposit
     suspend fun saveToken(token: String) {
         return repository.saveToken(token)
     }
+
+    suspend fun getToken(): String? {
+        return repository.getToken()
+    }
 }

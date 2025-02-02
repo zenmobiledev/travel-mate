@@ -1,8 +1,8 @@
 package com.example.travelmate.data.source.local.datasource
 
 import com.example.travelmate.data.source.local.dao.TravelDao
-import com.example.travelmate.data.source.local.model.DestinationEntity
-import com.example.travelmate.data.source.local.model.ItineraryEntity
+import com.example.travelmate.data.source.local.entity.DestinationEntity
+import com.example.travelmate.data.source.local.entity.ItineraryEntity
 import com.example.travelmate.data.source.local.preference.PreferenceDataStore
 import javax.inject.Inject
 
