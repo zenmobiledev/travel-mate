@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ItineraryEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val date: String,
     val location: String,

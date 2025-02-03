@@ -10,7 +10,7 @@ import coil3.load
 import com.example.travelmate.R
 import com.example.travelmate.databinding.ActivityItineraryDetailBinding
 import com.example.travelmate.domain.model.destination.Itinerary
-import com.example.travelmate.presentation.feature.travel.detail.DetailActivity
+import com.example.travelmate.presentation.feature.travel.view.activity.DetailActivity
 
 class ItineraryDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityItineraryDetailBinding

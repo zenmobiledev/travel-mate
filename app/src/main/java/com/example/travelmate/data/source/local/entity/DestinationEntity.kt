@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class DestinationEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey val id: Int,
     val category: String,
     val name: String,
     val photoUrl: String,

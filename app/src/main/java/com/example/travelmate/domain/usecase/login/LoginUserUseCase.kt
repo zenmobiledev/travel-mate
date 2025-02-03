@@ -32,6 +32,19 @@ class LoginUserUseCase @Inject constructor(private val repository: TravelReposit
         return repository.getUser()
     }
 
+    suspend fun saveCategory(
+        beach: Boolean,
+        mountain: Boolean,
+        cultural: Boolean,
+        culinary: Boolean,
+    ) {
+        return repository.saveCategory(beach, mountain, cultural, culinary)
+    }
+
+    suspend fun getCategory(): Map<String, Boolean> {
+        return repository.getCategory()
+    }
+
     suspend fun logout() {
         return repository.logout()
     }

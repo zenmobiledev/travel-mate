@@ -19,7 +19,7 @@
             android:name=".presentation.feature.itinerary.view.activity.ItineraryDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.feature.travel.detail.DetailActivity"
+            android:name=".presentation.feature.travel.view.activity.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.feature.category.CategoryActivity"

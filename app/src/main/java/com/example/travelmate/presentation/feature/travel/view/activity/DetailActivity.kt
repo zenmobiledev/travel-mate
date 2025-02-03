@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.travel.detail
+package com.example.travelmate.presentation.feature.travel.view.activity
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -21,7 +21,7 @@ import com.example.travelmate.databinding.ActivityDetailBinding
 import com.example.travelmate.databinding.CustomDialogBinding
 import com.example.travelmate.domain.model.destination.DestinationUser
 import com.example.travelmate.domain.model.destination.Itinerary
-import com.example.travelmate.presentation.feature.travel.TravelViewModel
+import com.example.travelmate.presentation.feature.travel.viewmodel.TravelViewModel
 import com.example.travelmate.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers

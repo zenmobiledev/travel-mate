@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.travel
+package com.example.travelmate.presentation.feature.travel.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -72,18 +72,11 @@ class TravelViewModel @Inject constructor(
                     is ResultResponse.Success -> {
                         _isLoading.value = false
                         result.data?.let { destinationUser ->
-                            _destinationData.value = _destinationData.value.copy(
-                                destinations = destinationUser.destinations,
-                                pagination = destinationUser.pagination
+                            _destinationData.value = DestinationUser(
+                                destinationUser.destinations,
+                                destinationUser.pagination
                             )
                         }
-//                        result.data?.let { destinationUser ->
-//                            _destinationData.value.copy() = DestinationUser(
-//                                destinationUser.destinations,
-//                                destinationUser.pagination
-//                            )
-//
-//                        }
                     }
 
                     is ResultResponse.Error -> {

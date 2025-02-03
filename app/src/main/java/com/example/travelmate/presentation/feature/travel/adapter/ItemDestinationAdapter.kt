@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.travel
+package com.example.travelmate.presentation.feature.travel.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

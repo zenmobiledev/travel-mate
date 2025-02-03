@@ -94,9 +94,10 @@ class TravelRepositoryImpl @Inject constructor(
                     response.body()?.let {
                         val remoteDestination = mapper.mapResponseToEntities(it)
                         val domainDestination = mapper.mapResponseToDomain(it)
-                        if (search != null) {
-                            travelLocalDataStore.saveDataDestination(remoteDestination)
-                        }
+//                        if (search != null) {
+//                            travelLocalDataStore.saveDataDestination(remoteDestination)
+//                        }
+                        travelLocalDataStore.saveDataDestination(remoteDestination)
 
                         emit(ResultResponse.Success(domainDestination))
                     }
@@ -105,11 +106,12 @@ class TravelRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 val cachedEntities = travelLocalDataStore.getDataDestination()
+                val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
                 if (search.isNullOrEmpty()) {
                     if (cachedEntities.isEmpty()) {
                         emit(ResultResponse.Error("No cached data available"))
+                        emit(ResultResponse.Success(cachedDomain))
                     } else {
-                        val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
                         emit(ResultResponse.Success(cachedDomain))
                     }
                 } else {

@@ -1,16 +1,20 @@
 package com.example.travelmate.presentation.feature.profile
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import coil3.load
 import coil3.request.error
 import com.example.travelmate.R
+import com.example.travelmate.databinding.CustomDialogCategoryBinding
 import com.example.travelmate.databinding.FragmentProfileBinding
 import com.example.travelmate.presentation.feature.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +58,65 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        binding.btnChangeDestination.setOnClickListener {
+            val dialogBinding = CustomDialogCategoryBinding.inflate(layoutInflater)
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setView(dialogBinding.root)
+
+            val dialog = alertDialogBuilder.create()
+            dialog.setCancelable(false)
+            lifecycleScope.launch {
+                val category = profileViewModel.getCategory()
+
+                dialogBinding.checkBoxBeach.isChecked = category["Beach"] ?: false
+                dialogBinding.checkBoxMountain.isChecked = category["Mountain"] ?: false
+                dialogBinding.checkBoxCultural.isChecked = category["Cultural"] ?: false
+                dialogBinding.checkBoxCulinary.isChecked = category["Culinary"] ?: false
+            }
+
+            with(dialogBinding) {
+                checkBoxBeach.setOnCheckedChangeListener { _, _ ->
+                    updateStartJourneyButtonState(
+                        this
+                    )
+                }
+                checkBoxMountain.setOnCheckedChangeListener { _, _ ->
+                    updateStartJourneyButtonState(
+                        this
+                    )
+                }
+                checkBoxCultural.setOnCheckedChangeListener { _, _ ->
+                    updateStartJourneyButtonState(
+                        this
+                    )
+                }
+                checkBoxCulinary.setOnCheckedChangeListener { _, _ ->
+                    updateStartJourneyButtonState(
+                        this
+                    )
+                }
+            }
+
+            dialogBinding.btnCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+            dialogBinding.btnSave.setOnClickListener {
+                lifecycleScope.launch {
+                    profileViewModel.saveCategory(
+                        beach = dialogBinding.checkBoxBeach.isChecked,
+                        mountain = dialogBinding.checkBoxMountain.isChecked,
+                        cultural = dialogBinding.checkBoxCultural.isChecked,
+                        culinary = dialogBinding.checkBoxCulinary.isChecked
+                    )
+                }
+                dialog.dismiss()
+            }
+
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+        }
+
         binding.btnLogout.setOnClickListener {
             lifecycleScope.launch {
                 profileViewModel.logout()
@@ -65,6 +128,16 @@ class ProfileFragment : Fragment() {
                 requireActivity().finish()
             }
         }
+    }
+
+    // check if any checkbox is checked
+    private fun updateStartJourneyButtonState(binding: CustomDialogCategoryBinding) {
+        val isAnyChecked = binding.checkBoxBeach.isChecked ||
+                binding.checkBoxMountain.isChecked ||
+                binding.checkBoxCultural.isChecked ||
+                binding.checkBoxCulinary.isChecked
+
+        binding.btnSave.isEnabled = isAnyChecked
     }
 
     override fun onDestroyView() {

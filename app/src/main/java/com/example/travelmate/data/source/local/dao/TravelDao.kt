@@ -12,13 +12,14 @@ import com.example.travelmate.data.source.local.entity.ItineraryEntity
 @Dao
 interface TravelDao {
     // DESTINATION
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDestination(itinerary: List<DestinationEntity>)
 
     @Query("SELECT * FROM destinationentity")
     suspend fun getDestination(): List<DestinationEntity>
 
     // ITINERARY
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertItinerary(itinerary: ItineraryEntity)
 
     @Query("SELECT * FROM itineraryentity")

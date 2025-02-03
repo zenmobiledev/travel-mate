@@ -23,4 +23,17 @@ class ProfileViewModel @Inject constructor(
     suspend fun profileUser() {
         _user.value = loginUserUseCase.getUser()
     }
+
+    suspend fun saveCategory(
+        beach: Boolean,
+        mountain: Boolean,
+        cultural: Boolean,
+        culinary: Boolean,
+    ) {
+        loginUserUseCase.saveCategory(beach, mountain, cultural, culinary)
+    }
+
+    suspend fun getCategory(): Map<String, Boolean> {
+        return loginUserUseCase.getCategory()
+    }
 }
