@@ -67,14 +67,14 @@ class TravelRepositoryImpl @Inject constructor(
         return travelLocalDataStore.getCategory()
     }
 
-
     // DESTINATION
     override suspend fun getDestinations(
         page: Int,
         limit: Int,
         category: String?,
-        token: String
-    ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
+        token: String,
+        search: String?,
+    ): Flow<ResultResponse<DestinationUser>> {
         return flow {
             emit(ResultResponse.Loading)
             try {
@@ -82,16 +82,22 @@ class TravelRepositoryImpl @Inject constructor(
                     .filterValues { it }
                     .keys.joinToString(",")
 
-                val response = if (selectedCategories.isEmpty()) {
-                    travelRemoteDataSource.getAllDestination(page, limit, token)
-                } else {
-                    travelRemoteDataSource.getDestinations(page, selectedCategories, token)
-                }
+                val response = travelRemoteDataSource.getDestinations(
+                    page = page,
+                    limit = limit,
+                    category = selectedCategories,
+                    token = token,
+                    search = search
+                )
+
                 if (response.isSuccessful) {
                     response.body()?.let {
                         val remoteDestination = mapper.mapResponseToEntities(it)
-                        val domainDestination = mapper.mapResponseToDomain(it).destinations
-                        travelLocalDataStore.saveDataDestination(remoteDestination)
+                        val domainDestination = mapper.mapResponseToDomain(it)
+                        if (search != null) {
+                            travelLocalDataStore.saveDataDestination(remoteDestination)
+                        }
+
                         emit(ResultResponse.Success(domainDestination))
                     }
                 } else {
@@ -99,88 +105,19 @@ class TravelRepositoryImpl @Inject constructor(
                 }
             } catch (e: Exception) {
                 val cachedEntities = travelLocalDataStore.getDataDestination()
-                val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
-                emit(ResultResponse.Success(cachedDomain.destinations))
+                if (search.isNullOrEmpty()) {
+                    if (cachedEntities.isEmpty()) {
+                        emit(ResultResponse.Error("No cached data available"))
+                    } else {
+                        val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
+                        emit(ResultResponse.Success(cachedDomain))
+                    }
+                } else {
+                    emit(ResultResponse.Error(e.message.toString()))
+                }
             }
         }
     }
-//    override suspend fun getAllDestination(
-//        page: Int,
-//        limit: Int,
-//        token: String,
-//    ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
-//        return flow {
-//            emit(ResultResponse.Loading)
-//            try {
-//                val response = travelRemoteDataSource.getAllDestination(
-//                    page = page,
-//                    limit = limit,
-//                    token = token
-//                )
-//                if (response.isSuccessful) {
-//                    val remoteDestination = response.body()?.let {
-//                        mapper.mapResponseToEntities(it)
-//                    } ?: emptyList()
-//                    val domainDestination = response.body()?.let {
-//                        mapper.mapResponseToDomain(it)
-//                    }
-//                    travelLocalDataStore.saveDataDestination(remoteDestination)
-//                    emit(ResultResponse.Success(domainDestination?.destinations))
-//                } else {
-//                    emit(ResultResponse.Error(response.message()))
-//                }
-//            } catch (e: Exception) {
-//                val cachedEntities = travelLocalDataStore.getDataDestination()
-//                val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
-//                emit(ResultResponse.Success(cachedDomain.destinations))
-//            }
-//        }
-//    }
-//
-//    override suspend fun getDestination(
-//        page: Int,
-//        limit: Int,
-//        token: String,
-//    ): Flow<ResultResponse<List<DestinationUser.Destination>>> {
-//        return flow {
-//            emit(ResultResponse.Loading)
-//            try {
-//                val selectedCategories = travelLocalDataStore.getCategory()
-//                    .filterValues { it } // Ambil yang dipilih
-//                    .keys.joinToString(",")
-//                val response = if (selectedCategories.isEmpty()) {
-//                    travelRemoteDataSource.getAllDestination(
-//                        page = page,
-//                        limit = limit,
-//                        token = token
-//                    )
-//                } else {
-//                    travelRemoteDataSource.getDestination(
-//                        page = page,
-//                        category = selectedCategories,
-//                        token = token
-//                    )
-//                }
-//
-//                if (response.isSuccessful) {
-//                    val remoteDestination = response.body()?.let {
-//                        mapper.mapResponseToEntities(it)
-//                    } ?: emptyList()
-//                    val domainDestination = response.body()?.let {
-//                        mapper.mapResponseToDomain(it)
-//                    }
-//                    travelLocalDataStore.saveDataDestination(remoteDestination)
-//                    emit(ResultResponse.Success(domainDestination?.destinations))
-//                } else {
-//                    emit(ResultResponse.Error(response.message()))
-//                }
-//            } catch (e: Exception) {
-//                val cachedEntities = travelLocalDataStore.getDataDestination()
-//                val cachedDomain = mapper.mapEntitiesToDomain(cachedEntities)
-//                emit(ResultResponse.Success(cachedDomain.destinations))
-//            }
-//        }
-//    }
 
     // ITINERARY
     override suspend fun saveItinerary(itinerary: Itinerary) {

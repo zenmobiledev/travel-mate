@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.travelmate.domain.model.destination.DestinationUser
 import com.example.travelmate.domain.model.destination.Itinerary
-import com.example.travelmate.domain.usecase.category.CategoryUseCase
 import com.example.travelmate.domain.usecase.destination.DestinationUseCase
 import com.example.travelmate.domain.usecase.itinerary.ItineraryUseCase
 import com.example.travelmate.utils.ResultResponse
@@ -24,24 +23,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TravelViewModel @Inject constructor(
-    private val categoryUseCase: CategoryUseCase,
     private val destinationUseCase: DestinationUseCase,
     private val itineraryUseCase: ItineraryUseCase,
 ) : ViewModel() {
-    private val _getAllDestination: MutableStateFlow<List<DestinationUser.Destination>?> =
-        MutableStateFlow(emptyList())
-    val getAllDestination: StateFlow<List<DestinationUser.Destination>?> =
-        _getAllDestination.asStateFlow()
+    private val _destinationData = MutableStateFlow(DestinationUser(emptyList(), null))
+    val destinationData: StateFlow<DestinationUser> = _destinationData.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage: SharedFlow<String> = _errorMessage.asSharedFlow()
-
-    // StateFlow untuk menyimpan kategori yang dipilih
-    private val _selectedCategories = MutableStateFlow<List<String>>(emptyList())
-    val selectedCategories: StateFlow<List<String>> = _selectedCategories.asStateFlow()
 
     suspend fun getToken(): String? {
         return destinationUseCase.getToken()
@@ -59,22 +51,41 @@ class TravelViewModel @Inject constructor(
         return itineraryUseCase.deleteItinerary(itinerary)
     }
 
-    fun fetchDestinations(page: Int, token: String, categories: List<String> = emptyList()) {
+    fun fetchDestinations(
+        token: String,
+        categories: List<String> = emptyList(),
+        search: String? = null,
+    ) {
         viewModelScope.launch {
             destinationUseCase(
-                page = page,
+                page = 1,
                 limit = 10,
-                category = if (categories.isEmpty()) null else categories.joinToString(","),
-                token = token
+                category = categories.joinToString(","),
+                token = token,
+                search = search,
             ).collect { result ->
                 when (result) {
-                    ResultResponse.Loading -> _isLoading.value = true
+                    ResultResponse.Loading -> {
+                        _isLoading.value = true
+                    }
+
                     is ResultResponse.Success -> {
                         _isLoading.value = false
-                        result.data?.let {
-                            _getAllDestination.value = (_getAllDestination.value ?: emptyList()) + it
+                        result.data?.let { destinationUser ->
+                            _destinationData.value = _destinationData.value.copy(
+                                destinations = destinationUser.destinations,
+                                pagination = destinationUser.pagination
+                            )
                         }
+//                        result.data?.let { destinationUser ->
+//                            _destinationData.value.copy() = DestinationUser(
+//                                destinationUser.destinations,
+//                                destinationUser.pagination
+//                            )
+//
+//                        }
                     }
+
                     is ResultResponse.Error -> {
                         _isLoading.value = false
                         _errorMessage.emit(result.message)
@@ -83,72 +94,6 @@ class TravelViewModel @Inject constructor(
             }
         }
     }
-
-//    suspend fun loadCategories(categories: List<String>) {
-//        val preferenceCategory = categoryUseCase.getCategory()
-//        _selectedCategories.value = categories.filter { preferenceCategory[it] == true }
-//    }
-
-//    fun fetchDestination(page: Int, token: String) {
-//        val selectedCategories = _selectedCategories.value
-//        if (selectedCategories.isEmpty()) {
-//            getAllDestination(page, 10, token)
-//        } else {
-//            getDestination(page, selectedCategories.joinToString(","), token)
-//        }
-//    }
-//
-//    private fun getAllDestination(page: Int, limit: Int, token: String) {
-//        viewModelScope.launch {
-//            destinationUseCase(
-//                page = page,
-//                limit = limit,
-//                token = token
-//            ).collect { result ->
-//                when (result) {
-//                    ResultResponse.Loading -> _isLoading.value = true
-//                    is ResultResponse.Success -> {
-//                        _isLoading.value = false
-//                        result.data?.let {
-//                            val oldPage = _getAllDestination.value ?: emptyList()
-//                            _getAllDestination.value = oldPage + it
-//                        }
-//                    }
-//
-//                    is ResultResponse.Error -> {
-//                        _isLoading.value = false
-//                        _errorMessage.emit(result.message)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    private fun getDestination(page: Int, category: String, token: String) {
-//        viewModelScope.launch {
-//            destinationUseCase(
-//                page = page,
-//                category = category,
-//                token = token
-//            ).collect { result ->
-//                when (result) {
-//                    ResultResponse.Loading -> _isLoading.value = true
-//                    is ResultResponse.Success -> {
-//                        _isLoading.value = false
-//                        result.data?.let {
-//                            val oldPage = _getAllDestination.value ?: emptyList()
-//                            _getAllDestination.value = oldPage + it
-//                        }
-//                    }
-//
-//                    is ResultResponse.Error -> {
-//                        _isLoading.value = false
-//                        _errorMessage.emit(result.message)
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     fun getItinerary(destinationId: String): Flow<Itinerary?> = flow {
         emit(itineraryUseCase.getItinerary().find { it.id.toString() == destinationId })

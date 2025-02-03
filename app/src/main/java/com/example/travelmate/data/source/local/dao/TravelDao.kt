@@ -12,7 +12,6 @@ import com.example.travelmate.data.source.local.entity.ItineraryEntity
 @Dao
 interface TravelDao {
     // DESTINATION
-    @Insert
     suspend fun insertDestination(itinerary: List<DestinationEntity>)
 
     @Query("SELECT * FROM destinationentity")

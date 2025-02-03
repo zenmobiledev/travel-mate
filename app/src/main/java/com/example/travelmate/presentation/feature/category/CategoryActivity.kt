@@ -55,10 +55,10 @@ class CategoryActivity : AppCompatActivity() {
         with(binding) {
             buttonStartJourney.setOnClickListener {
                 val categories = listOf(
-                    checkBoxBeach.isChecked,
-                    checkBoxMountain.isChecked,
-                    checkBoxCultural.isChecked,
-                    checkBoxCulinary.isChecked
+                    checkBoxBeach.isChecked.also { binding.checkBoxBeach.text = "Beach" },
+                    checkBoxMountain.isChecked.also { binding.checkBoxMountain.text = "Mountain" },
+                    checkBoxCultural.isChecked.also { binding.checkBoxCultural.text = "Cultural" },
+                    checkBoxCulinary.isChecked.also { binding.checkBoxCulinary.text = "Culinary" }
                 )
                 val (beach, mountain, cultural, culinary) = categories
                 if (!beach && !mountain && !cultural && !culinary) {

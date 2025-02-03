@@ -2,7 +2,6 @@ package com.example.travelmate.presentation.feature.travel
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -79,31 +78,38 @@ class TravelFragment : Fragment() {
 
         setupRecyclerView()
         setupObserver()
+
+        binding.swipeRefresh.setOnRefreshListener {
+            lifecycleScope.launch {
+                val token = travelViewModel.getToken()
+                if (!token.isNullOrEmpty()) {
+                    travelViewModel.fetchDestinations(token = token)
+                }
+                binding.swipeRefresh.isRefreshing = false
+            }
+        }
     }
 
     private fun setupSearchListener(searchView: SearchView) {
         searchView.queryHint = "Search destination"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(query: String?): Boolean = true
+            override fun onQueryTextChange(query: String?): Boolean = false
 
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return if (query != null) {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        // submit data to the adapter
-                        Toast.makeText(requireContext(), "Search: $query", Toast.LENGTH_SHORT)
-                            .show()
+                lifecycleScope.launch {
+                    val token = travelViewModel.getToken()
+                    if (token != null) {
+                        travelViewModel.fetchDestinations(token = token, search = query)
                     }
-                    true
-                } else {
-                    false
                 }
+                return true
             }
         })
     }
 
     private fun setupRecyclerView() {
         binding.rvDestination.adapter = destinationAdapter
-        binding.rvDestination.layoutManager = LinearLayoutManager(view?.context)
+        binding.rvDestination.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun setupObserver() {
@@ -112,27 +118,28 @@ class TravelFragment : Fragment() {
                 launch {
                     travelViewModel.isLoading.collect {
                         binding.shimmerDestination.isVisible = it
+                        binding.swipeRefresh.isRefreshing = it
                     }
                 }
 
                 launch {
                     travelViewModel.errorMessage.filterNotNull().collect {
                         Toast.makeText(view?.context, "Error: $it", Toast.LENGTH_LONG).show()
+                        binding.swipeRefresh.isRefreshing = false
                     }
                 }
 
                 launch {
-                    travelViewModel.getAllDestination.collect {
-                        destinationAdapter.submitList(it)
+                    travelViewModel.destinationData.collect {
+                        destinationAdapter.submitList(it.destinations)
+                        binding.swipeRefresh.isRefreshing = false
                     }
                 }
 
                 launch {
                     val token = travelViewModel.getToken()
-                    if (!token.isNullOrEmpty() && travelViewModel.getAllDestination.value.isNullOrEmpty()) {
-                        travelViewModel.fetchDestinations(page = 1, token = token)
-                    } else {
-                        Log.e("TravelFragment", "Token is null or empty")
+                    if (!token.isNullOrEmpty() && travelViewModel.destinationData.value.destinations.isEmpty()) {
+                        travelViewModel.fetchDestinations(token = token)
                     }
                 }
             }

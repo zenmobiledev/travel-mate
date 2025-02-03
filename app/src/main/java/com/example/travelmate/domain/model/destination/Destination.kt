@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 data class DestinationUser(
     val destinations: List<Destination>,
-//    val pagination: Pagination,
+    val pagination: Pagination?,
 ) {
     @Parcelize
     data class Destination(
@@ -20,10 +20,10 @@ data class DestinationUser(
         val notes: String? = null,
     ) : Parcelable
 
-//    data class Pagination(
-//        val currentPage: Int,
-//        val itemsPerPage: Int,
-//        val totalItems: Int,
-//        val totalPages: Int,
-//    )
+    data class Pagination(
+        val currentPage: Int,
+        val itemsPerPage: Int,
+        val totalItems: Int,
+        val totalPages: Int,
+    )
 }

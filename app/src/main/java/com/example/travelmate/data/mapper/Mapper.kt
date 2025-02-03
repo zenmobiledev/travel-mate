@@ -48,7 +48,7 @@ class Mapper @Inject constructor() {
     fun mapResponseToDomain(response: DestinationResponse): DestinationUser {
         return DestinationUser(
             destinations = response.data.destinations.map { mapResponseToDomain(it) },
-//            pagination = mapResponseToDomain(response.data.pagination)
+            pagination = mapResponseToDomain(response.data.pagination)
         )
     }
 
@@ -64,14 +64,14 @@ class Mapper @Inject constructor() {
         )
     }
 
-//    private fun mapResponseToDomain(pagination: DestinationResponse.Data.Pagination): DestinationUser.Pagination {
-//        return DestinationUser.Pagination(
-//            currentPage = pagination.currentPage,
-//            itemsPerPage = pagination.itemsPerPage,
-//            totalItems = pagination.totalItems,
-//            totalPages = pagination.totalPages
-//        )
-//    }
+    private fun mapResponseToDomain(pagination: DestinationResponse.Data.Pagination): DestinationUser.Pagination {
+        return DestinationUser.Pagination(
+            currentPage = pagination.currentPage,
+            itemsPerPage = pagination.itemsPerPage,
+            totalItems = pagination.totalItems,
+            totalPages = pagination.totalPages
+        )
+    }
 
     fun mapResponseToEntities(response: DestinationResponse): List<DestinationEntity> {
         return response.data.destinations.map {
@@ -99,7 +99,13 @@ class Mapper @Inject constructor() {
                     photoUrl = it.photoUrl,
                     rating = it.rating
                 )
-            }
+            },
+            pagination = DestinationUser.Pagination(
+                currentPage = 1,
+                itemsPerPage = 10,
+                totalItems = entity.size,
+                totalPages = 1
+            )
         )
     }
 
@@ -121,19 +127,6 @@ class Mapper @Inject constructor() {
 
     fun mapDomainToEntities(entity: Itinerary): ItineraryEntity {
         return ItineraryEntity(
-            id = entity.id,
-            name = entity.name,
-            date = entity.date,
-            location = entity.location,
-            notes = entity.notes,
-            photoUrl = entity.photoUrl,
-            rating = entity.rating,
-            description = entity.description
-        )
-    }
-
-    fun mapEntitiesToDomain(entity: ItineraryEntity): Itinerary {
-        return Itinerary(
             id = entity.id,
             name = entity.name,
             date = entity.date,

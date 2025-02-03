@@ -24,12 +24,14 @@ interface TravelRepository {
 
     suspend fun getCategory(): Map<String, Boolean>
 
+    // Destination
     suspend fun getDestinations(
         page: Int,
         limit: Int,
         category: String? = null,
         token: String,
-    ): Flow<ResultResponse<List<DestinationUser.Destination>>>
+        search: String? = null,
+    ): Flow<ResultResponse<DestinationUser>>
 
     // Itinerary
     suspend fun saveItinerary(itinerary: Itinerary)

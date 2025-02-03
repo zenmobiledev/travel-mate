@@ -22,36 +22,20 @@ class TravelRemoteDataSourceImpl @Inject constructor(private val travelService: 
         }
     }
 
-    override suspend fun getAllDestination(
+    override suspend fun getDestinations(
         page: Int,
         limit: Int,
+        category: String,
         token: String,
+        search: String?,
     ): Response<DestinationResponse> {
         try {
             val response = travelService.getDestinations(
                 page = page,
                 limit = limit,
-                token = token
-            )
-            return when {
-                response.isSuccessful -> response
-                else -> throw Exception(response.code().toString())
-            }
-        } catch (e: Exception) {
-            throw Exception(e.message.toString())
-        }
-    }
-
-    override suspend fun getDestinations(
-        page: Int,
-        category: String,
-        token: String,
-    ): Response<DestinationResponse> {
-        try {
-            val response = travelService.getDestinations(
-                page = page,
                 category = category,
-                token = token
+                token = token,
+                search = search
             )
             return when {
                 response.isSuccessful -> response
@@ -61,25 +45,4 @@ class TravelRemoteDataSourceImpl @Inject constructor(private val travelService: 
             throw Exception(e.message.toString())
         }
     }
-
-
-//    override suspend fun getAllDestination(
-//        page: Int,
-//        limit: Int,
-//        token: String,
-//    ): Response<DestinationResponse> {
-//        try {
-//            val response = travelService.getDestinations(
-//                page = page,
-//                limit = limit,
-//                token = token
-//            )
-//            return when {
-//                response.isSuccessful -> response
-//                else -> throw Exception(response.code().toString())
-//            }
-//        } catch (e: Exception) {
-//            throw Exception(e.message.toString())
-//        }
-//    }
 }
