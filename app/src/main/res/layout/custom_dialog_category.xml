@@ -5,30 +5,43 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginHorizontal="16dp"
-    app:cardCornerRadius="12dp">
+    android:elevation="50dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="@dimen/activity_vertical_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#FEFEFE"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/textView_1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="What do you want to visit?"
-            android:textAlignment="center"
-            android:textSize="24sp"
+            android:text="@string/text_what_do_you_want_to_visit"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Pick your destination"
+            android:text="@string/text_pick_your_destination"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView_1" />
+
+        <ImageView
+            android:id="@+id/imageView_travel_plans"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/destination"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_1" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBox_beach"

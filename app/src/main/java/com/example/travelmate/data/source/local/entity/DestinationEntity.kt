@@ -13,5 +13,6 @@ data class DestinationEntity(
     val location: String,
     val rating: Double,
     val date: String? = null,
+    val title: String? = null,
     val notes: String? = null,
 )

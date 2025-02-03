@@ -120,7 +120,7 @@ class TravelFragment : Fragment() {
                 launch {
                     travelViewModel.isLoading.collect {
                         binding.shimmerDestination.isVisible = it
-                        binding.swipeRefresh.isRefreshing = it
+                        binding.rvDestination.isVisible = !it
                     }
                 }
 
@@ -134,7 +134,6 @@ class TravelFragment : Fragment() {
                 launch {
                     travelViewModel.destinationData.collect {
                         destinationAdapter.submitList(it.destinations)
-                        binding.swipeRefresh.isRefreshing = false
                     }
                 }
 

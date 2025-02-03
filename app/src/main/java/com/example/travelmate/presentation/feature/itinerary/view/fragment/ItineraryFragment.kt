@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
 import com.example.travelmate.presentation.feature.itinerary.adapter.ItemItineraryAdapter
 import com.example.travelmate.presentation.feature.itinerary.view.activity.ItineraryDetailActivity
 import com.example.travelmate.presentation.feature.itinerary.viewmodel.ItineraryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ItineraryFragment : Fragment() {
@@ -53,11 +58,23 @@ class ItineraryFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        itineraryViewModel.itineraryList.observe(viewLifecycleOwner) {
-            itineraryAdapter.submitList(it)
+        lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    itineraryViewModel.itineraryList.collect {
+                        if (it.isEmpty()) {
+                            binding.tvNoData.isVisible = true
+                            binding.rvItinerary.isVisible = false
+                        } else {
+                            binding.tvNoData.isVisible = false
+                            binding.rvItinerary.isVisible = true
+                            itineraryAdapter.submitList(it)
+                        }
+                        itineraryViewModel.fetchItinerary()
+                    }
+                }
+            }
         }
-
-        itineraryViewModel.fetchItinerary()
     }
 
     private fun setupRecyclerView() {

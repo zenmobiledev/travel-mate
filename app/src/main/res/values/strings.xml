@@ -25,4 +25,8 @@
     <string name="text_search">Search</string>
     <string name="text_save">Save</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_no_data">No Data</string>
+    <string name="text_what_do_you_want_to_visit">What do you want to visit?</string>
+    <string name="text_pick_your_destination">Pick your\ndestination</string>
+    <string name="text_update">Update</string>
 </resources>

@@ -5,12 +5,14 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ItineraryEntity(
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val category: String,
     val name: String,
-    val date: String,
-    val location: String,
-    val notes: String,
-    val rating: Double,
-    val description: String? = null,
     val photoUrl: String,
+    val description: String? = null,
+    val location: String,
+    val rating: Double,
+    val date: String,
+    val title: String,
+    val notes: String,
 )

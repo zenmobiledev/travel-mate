@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="What do you want to visit?"
+                android:text="@string/text_what_do_you_want_to_visit"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
                 android:id="@+id/textView_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pick your\ndestination"
+                android:text="@string/text_pick_your_destination"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView_1"
@@ -45,10 +45,10 @@
 
             <ImageView
                 android:id="@+id/imageView_travel_plans"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/travel_plans"
+                android:src="@drawable/destination"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView_1" />
 

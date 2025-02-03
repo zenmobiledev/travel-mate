@@ -17,6 +17,7 @@ import com.example.travelmate.R
 import com.example.travelmate.databinding.CustomDialogCategoryBinding
 import com.example.travelmate.databinding.FragmentProfileBinding
 import com.example.travelmate.presentation.feature.login.LoginActivity
+import com.example.travelmate.presentation.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -110,7 +111,12 @@ class ProfileFragment : Fragment() {
                         culinary = dialogBinding.checkBoxCulinary.isChecked
                     )
                 }
-                dialog.dismiss()
+                dialog.dismiss().apply {
+                    val intent = Intent(requireContext(), MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    startActivity(intent)
+                }
             }
 
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

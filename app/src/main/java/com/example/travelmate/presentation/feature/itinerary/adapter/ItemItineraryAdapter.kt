@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil3.load
 import com.example.travelmate.databinding.ItemItineraryBinding
 import com.example.travelmate.domain.model.destination.Itinerary
+import com.example.travelmate.utils.convertDate
 
 class ItemItineraryAdapter(val clickItemListener: (Itinerary) -> Unit) :
     ListAdapter<Itinerary, ItemItineraryAdapter.ItemItineraryViewHolder>(DIFF_UTIL) {
@@ -24,7 +25,7 @@ class ItemItineraryAdapter(val clickItemListener: (Itinerary) -> Unit) :
             with(binding) {
                 tvName.text = itinerary.name
                 imageViewPhotoUrl.load(itinerary.photoUrl)
-                tvDate.text = itinerary.date
+                tvDate.text = itinerary.date.convertDate()
                 tvLocation.text = itinerary.location
                 tvNote.text = itinerary.notes
             }

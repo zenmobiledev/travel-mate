@@ -120,7 +120,9 @@ class Mapper @Inject constructor() {
                 notes = it.notes,
                 photoUrl = it.photoUrl,
                 rating = it.rating,
-                description = it.description
+                description = it.description,
+                category = it.category,
+                title = it.title
             )
         }
     }
@@ -134,7 +136,9 @@ class Mapper @Inject constructor() {
             notes = entity.notes,
             photoUrl = entity.photoUrl,
             rating = entity.rating,
-            description = entity.description
+            description = entity.description,
+            category = entity.category,
+            title = entity.title,
         )
     }
 }

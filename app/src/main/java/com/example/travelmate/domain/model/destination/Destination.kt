@@ -10,13 +10,14 @@ data class DestinationUser(
     @Parcelize
     data class Destination(
         val id: Int,
-        val name: String,
-        val description: String,
-        val photoUrl: String,
         val category: String,
-        val rating: Double,
+        val name: String,
+        val photoUrl: String,
+        val description: String,
         val location: String,
+        val rating: Double,
         val date: String? = null,
+        val title: String? = null,
         val notes: String? = null,
     ) : Parcelable
 

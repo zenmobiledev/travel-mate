@@ -25,6 +25,7 @@
 
             <include layout="@layout/item_shimmer" />
 
+            <include layout="@layout/item_shimmer" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginHorizontal="16dp"
+    android:background="@android:color/transparent"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/text_edit_itinerary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="centerInside"
+            android:src="@drawable/outline_cancel_24"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/text_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_title" />
+
+        <EditText
+            android:id="@+id/edtDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/baseline_date_range_24"
+            android:drawablePadding="8dp"
+            android:focusable="false"
+            android:hint="Set Date"
+            app:layout_constraintStart_toStartOf="@+id/text_title"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/outline_title_24"
+            android:drawablePadding="8dp"
+            android:hint="Set Title"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@id/edtDate" />
+
+        <EditText
+            android:id="@+id/edtNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableStart="@drawable/outline_sticky_note_2_24"
+            android:drawablePadding="8dp"
+            android:hint="Notes"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:maxLines="4"
+            app:layout_constraintTop_toBottomOf="@id/edtTitle" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_positive"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/text_update"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/outline_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edtNotes"
+            app:layout_constraintTop_toBottomOf="@+id/edtNotes" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_negative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/md_theme_error"
+            android:text="@string/text_delete"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/outline_delete_24"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_positive"
+            app:layout_constraintEnd_toStartOf="@+id/btn_positive"
+            app:layout_constraintTop_toTopOf="@+id/btn_positive" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
