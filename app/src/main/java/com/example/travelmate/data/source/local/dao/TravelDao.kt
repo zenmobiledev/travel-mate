@@ -25,6 +25,9 @@ interface TravelDao {
     @Query("SELECT * FROM itineraryentity")
     suspend fun getAllItinerary(): List<ItineraryEntity>
 
+    @Query("SELECT * FROM itineraryentity")
+    suspend fun getItemItinerary(): ItineraryEntity
+
     @Update
     suspend fun updateItinerary(itinerary: ItineraryEntity)
 

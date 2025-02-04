@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.feature.itinerary.view.fragment.ItineraryFragment">
+    tools:context=".presentation.feature.itinerary.view.itinerary.ItineraryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_itinerary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:listitem="@layout/item_itinerary" />
+        tools:listitem="@layout/item_itinerary"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_no_data"

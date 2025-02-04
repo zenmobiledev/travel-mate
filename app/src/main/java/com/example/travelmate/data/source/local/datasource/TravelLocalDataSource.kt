@@ -28,7 +28,8 @@ interface TravelLocalDataSource {
 
     // ITINERARY
     suspend fun saveItinerary(itinerary: ItineraryEntity)
-    suspend fun getItinerary(): List<ItineraryEntity>
+    suspend fun getListItinerary(): List<ItineraryEntity>
+    suspend fun getItinerary(): ItineraryEntity
     suspend fun updateItinerary(itinerary: ItineraryEntity)
     suspend fun deleteItinerary(itinerary: ItineraryEntity)
 }

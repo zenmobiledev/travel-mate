@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.itinerary.viewmodel
+package com.example.travelmate.presentation.feature.itinerary.view.itinerary
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,23 +17,9 @@ class ItineraryViewModel @Inject constructor(private val itineraryUseCase: Itine
     private val _itineraryList = MutableStateFlow<List<Itinerary>>(emptyList())
     val itineraryList: StateFlow<List<Itinerary>> = _itineraryList.asStateFlow()
 
-    fun fetchItinerary() {
+    fun getItinerary() {
         viewModelScope.launch {
-            _itineraryList.value = itineraryUseCase.getItinerary()
-        }
-    }
-
-    fun updateItinerary(itinerary: Itinerary) {
-        viewModelScope.launch {
-            itineraryUseCase.updateItinerary(itinerary)
-            fetchItinerary()
-        }
-    }
-
-    fun deleteItinerary(itinerary: Itinerary) {
-        viewModelScope.launch {
-            itineraryUseCase.deleteItinerary(itinerary)
-            fetchItinerary()
+            _itineraryList.value = itineraryUseCase.getItineraryList()
         }
     }
 }

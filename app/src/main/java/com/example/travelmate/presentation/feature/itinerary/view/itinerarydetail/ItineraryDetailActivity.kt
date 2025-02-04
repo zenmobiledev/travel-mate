@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.itinerary.view.activity
+package com.example.travelmate.presentation.feature.itinerary.view.itinerarydetail
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -18,7 +18,6 @@ import com.example.travelmate.R
 import com.example.travelmate.databinding.ActivityItineraryDetailBinding
 import com.example.travelmate.databinding.EditCustomDialogBinding
 import com.example.travelmate.domain.model.destination.Itinerary
-import com.example.travelmate.presentation.feature.itinerary.viewmodel.ItineraryViewModel
 import com.example.travelmate.presentation.feature.travel.view.activity.DetailActivity
 import com.example.travelmate.utils.convertDate
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,11 +30,14 @@ import java.util.Calendar
 class ItineraryDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityItineraryDetailBinding
 
-    private lateinit var itineraryViewModel: ItineraryViewModel
+    private lateinit var itineraryViewModel: ItineraryDetailViewModel
+
+    private var itinerary: Itinerary? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        itineraryViewModel = ViewModelProvider(this)[ItineraryViewModel::class.java]
+        itineraryViewModel = ViewModelProvider(this)[ItineraryDetailViewModel::class.java]
         enableEdgeToEdge()
         binding = ActivityItineraryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -46,26 +48,28 @@ class ItineraryDetailActivity : AppCompatActivity() {
             insets
         }
 
-        val itinerary = intent.getParcelableExtra<Itinerary>(EXTRA_ITINERARY)
+        itinerary = intent.getParcelableExtra(EXTRA_ITINERARY)
 
         when {
             itinerary != null -> {
                 with(binding) {
-                    toolbarItinerary.title = "Itinerary: ${itinerary.title}"
+                    toolbarItinerary.title = "Itinerary: ${itinerary?.title}"
                     setSupportActionBar(toolbarItinerary)
                     toolbarItinerary.setNavigationOnClickListener {
                         onBackPressedDispatcher.onBackPressed()
                     }
-                    tvDate.text = itinerary.date.convertDate()
-                    tvNote.text = itinerary.notes
-                    imageViewPhotoUrl.load(itinerary.photoUrl)
-                    tvCategory.text = itinerary.category
-                    tvName.text = itinerary.name
-                    tvLocation.text = itinerary.location
+                    tvDate.text = itinerary?.date?.convertDate()
+                    tvNote.text = itinerary?.notes
+                    imageViewPhotoUrl.load(itinerary?.photoUrl)
+                    tvCategory.text = itinerary?.category
+                    tvName.text = itinerary?.name
+                    tvLocation.text = itinerary?.location
                 }
 
                 binding.fabEdit.setOnClickListener {
-                    showEditDialog(itinerary)
+                    itinerary?.let {
+                        showEditDialog(it)
+                    }
                 }
             }
         }
@@ -75,6 +79,8 @@ class ItineraryDetailActivity : AppCompatActivity() {
                 putExtra(DetailActivity.EXTRA_ITINERARY, itinerary)
             })
         }
+
+        setupObserve()
     }
 
     private fun showEditDialog(itinerary: Itinerary) {
@@ -86,7 +92,9 @@ class ItineraryDetailActivity : AppCompatActivity() {
         dialog.setCancelable(false)
 
         dialogBinding.edtDate.setText(itinerary.date)
+        dialogBinding.edtTitle.setSelection(itinerary.title.length)
         dialogBinding.edtTitle.setText(itinerary.title)
+
         dialogBinding.edtNotes.setText(itinerary.notes)
 
         // Date Picker
@@ -116,8 +124,9 @@ class ItineraryDetailActivity : AppCompatActivity() {
                 }
             }
             Toast.makeText(this, "Itinerary updated successfully", Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
-            finish()
+            dialog.dismiss().also {
+                itineraryViewModel.getItinerary()
+            }
         }
 
         dialogBinding.btnNegative.setOnClickListener {
@@ -137,6 +146,21 @@ class ItineraryDetailActivity : AppCompatActivity() {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
+    }
+
+    private fun setupObserve() {
+        lifecycleScope.launch {
+            itineraryViewModel.itinerary.collect {
+                if (it != null) {
+                    with(binding) {
+                        toolbarItinerary.title = "Itinerary: ${it.title}"
+                        tvDate.text = it.date.convertDate()
+                        tvNote.text = it.notes
+                    }
+                    itinerary = it
+                }
+            }
+        }
     }
 
     companion object {

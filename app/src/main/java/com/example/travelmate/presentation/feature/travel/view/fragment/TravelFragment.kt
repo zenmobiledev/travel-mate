@@ -72,6 +72,7 @@ class TravelFragment : Fragment() {
                 val searchItem = menu.findItem(R.id.menu_search)
                 val searchView =
                     searchItem?.actionView as SearchView
+
                 setupSearchListener(searchView)
             }
 
@@ -95,6 +96,7 @@ class TravelFragment : Fragment() {
     private fun setupSearchListener(searchView: SearchView) {
         searchView.queryHint = "Search destination"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextChange(query: String?): Boolean = false
 
             override fun onQueryTextSubmit(query: String?): Boolean {

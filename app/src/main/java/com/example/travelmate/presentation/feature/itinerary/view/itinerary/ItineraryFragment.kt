@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.itinerary.view.fragment
+package com.example.travelmate.presentation.feature.itinerary.view.itinerary
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,8 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
 import com.example.travelmate.presentation.feature.itinerary.adapter.ItemItineraryAdapter
-import com.example.travelmate.presentation.feature.itinerary.view.activity.ItineraryDetailActivity
-import com.example.travelmate.presentation.feature.itinerary.viewmodel.ItineraryViewModel
+import com.example.travelmate.presentation.feature.itinerary.view.itinerarydetail.ItineraryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -70,7 +69,7 @@ class ItineraryFragment : Fragment() {
                             binding.rvItinerary.isVisible = true
                             itineraryAdapter.submitList(it)
                         }
-                        itineraryViewModel.fetchItinerary()
+                        itineraryViewModel.getItinerary()
                     }
                 }
             }

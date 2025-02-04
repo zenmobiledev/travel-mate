@@ -55,18 +55,16 @@ class LoginActivity : AppCompatActivity() {
         binding.buttonLogin.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
-            loginViewModel.loginUser(
-                email = "traveller1@gmail.com",
-                password = "abcDEF123!"
-            )
-//            if (email.isNotEmpty() && password.isNotEmpty()) {
-//                loginViewModel.loginUser(
-//                    email = email,
-//                    password = password
-//                )
-//            } else {
-//                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
-//            }
+//                email = "traveller1@gmail.com",
+//                password = "abcDEF123!"
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                loginViewModel.loginUser(
+                    email = email,
+                    password = password
+                )
+            } else {
+                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            }
 
         }
     }

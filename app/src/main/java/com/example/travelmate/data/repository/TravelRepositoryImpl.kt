@@ -126,9 +126,14 @@ class TravelRepositoryImpl @Inject constructor(
         travelLocalDataStore.saveItinerary(mapper.mapDomainToEntities(itinerary))
     }
 
-    override suspend fun getItinerary(): List<Itinerary> {
+    override suspend fun getListItinerary(): List<Itinerary> {
+        return mapper.mapEntitiesToDomain(travelLocalDataStore.getListItinerary())
+    }
+
+    override suspend fun getItinerary(): Itinerary {
         return mapper.mapEntitiesToDomain(travelLocalDataStore.getItinerary())
     }
+
 
     override suspend fun updateItinerary(itinerary: Itinerary) {
         travelLocalDataStore.updateItinerary(mapper.mapDomainToEntities(itinerary))

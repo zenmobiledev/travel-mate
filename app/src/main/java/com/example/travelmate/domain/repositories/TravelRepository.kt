@@ -36,7 +36,9 @@ interface TravelRepository {
     // Itinerary
     suspend fun saveItinerary(itinerary: Itinerary)
 
-    suspend fun getItinerary(): List<Itinerary>
+    suspend fun getListItinerary(): List<Itinerary>
+
+    suspend fun getItinerary(): Itinerary
 
     suspend fun updateItinerary(itinerary: Itinerary)
 

@@ -27,6 +27,7 @@ class ItemItineraryAdapter(val clickItemListener: (Itinerary) -> Unit) :
                 imageViewPhotoUrl.load(itinerary.photoUrl)
                 tvDate.text = itinerary.date.convertDate()
                 tvLocation.text = itinerary.location
+                tvTitle.text = itinerary.title
                 tvNote.text = itinerary.notes
             }
         }

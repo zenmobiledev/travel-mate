@@ -127,6 +127,21 @@ class Mapper @Inject constructor() {
         }
     }
 
+    fun mapEntitiesToDomain(entity: ItineraryEntity): Itinerary {
+        return Itinerary(
+            id = entity.id,
+            category = entity.category,
+            name = entity.name,
+            photoUrl = entity.photoUrl,
+            description = entity.description,
+            location = entity.location,
+            rating = entity.rating,
+            date = entity.date,
+            title = entity.title,
+            notes = entity.notes
+        )
+    }
+
     fun mapDomainToEntities(entity: Itinerary): ItineraryEntity {
         return ItineraryEntity(
             id = entity.id,

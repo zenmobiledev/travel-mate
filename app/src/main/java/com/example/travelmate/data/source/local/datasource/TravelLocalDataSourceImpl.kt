@@ -54,8 +54,12 @@ class TravelLocalDataSourceImpl @Inject constructor(
         return travelDao.insertItinerary(itinerary)
     }
 
-    override suspend fun getItinerary(): List<ItineraryEntity> {
+    override suspend fun getListItinerary(): List<ItineraryEntity> {
         return travelDao.getAllItinerary()
+    }
+
+    override suspend fun getItinerary(): ItineraryEntity {
+        return travelDao.getItemItinerary()
     }
 
     override suspend fun updateItinerary(itinerary: ItineraryEntity) {
