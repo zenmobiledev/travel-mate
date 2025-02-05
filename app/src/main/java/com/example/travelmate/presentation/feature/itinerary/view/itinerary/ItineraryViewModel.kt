@@ -17,7 +17,7 @@ class ItineraryViewModel @Inject constructor(private val itineraryUseCase: Itine
     private val _itineraryList = MutableStateFlow<List<Itinerary>>(emptyList())
     val itineraryList: StateFlow<List<Itinerary>> = _itineraryList.asStateFlow()
 
-    fun getItinerary() {
+    fun getListItinerary() {
         viewModelScope.launch {
             _itineraryList.value = itineraryUseCase.getItineraryList()
         }

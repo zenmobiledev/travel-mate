@@ -31,7 +31,7 @@ class ItineraryDetailViewModel @Inject constructor(private val itineraryUseCase:
         }
     }
 
-    fun getItinerary() {
+    private fun getItinerary() {
         viewModelScope.launch {
             _itinerary.value = itineraryUseCase.getItinerary()
         }

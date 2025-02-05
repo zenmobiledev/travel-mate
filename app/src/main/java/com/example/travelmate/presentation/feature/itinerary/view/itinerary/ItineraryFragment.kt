@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.databinding.FragmentItineraryBinding
-import com.example.travelmate.presentation.feature.itinerary.adapter.ItemItineraryAdapter
+import com.example.travelmate.presentation.feature.itinerary.view.adapter.ItemItineraryAdapter
 import com.example.travelmate.presentation.feature.itinerary.view.itinerarydetail.ItineraryDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,7 +69,7 @@ class ItineraryFragment : Fragment() {
                             binding.rvItinerary.isVisible = true
                             itineraryAdapter.submitList(it)
                         }
-                        itineraryViewModel.getItinerary()
+                        itineraryViewModel.getListItinerary()
                     }
                 }
             }

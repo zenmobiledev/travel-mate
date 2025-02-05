@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.travel.viewmodel
+package com.example.travelmate.presentation.feature.travel.view.travel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,14 +37,6 @@ class TravelViewModel @Inject constructor(
 
     suspend fun saveItinerary(itinerary: Itinerary) {
         return itineraryUseCase.saveItinerary(itinerary)
-    }
-
-    suspend fun updateItinerary(itinerary: Itinerary) {
-        return itineraryUseCase.updateItinerary(itinerary)
-    }
-
-    suspend fun deleteItinerary(itinerary: Itinerary) {
-        return itineraryUseCase.deleteItinerary(itinerary)
     }
 
     fun fetchDestinations(

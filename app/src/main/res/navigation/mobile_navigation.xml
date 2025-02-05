@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_travel"
-        android:name="com.example.travelmate.presentation.feature.travel.view.fragment.TravelFragment"
+        android:name="com.example.travelmate.presentation.feature.travel.view.travel.TravelFragment"
         android:label="@string/title_travel"
         tools:layout="@layout/fragment_travel" />
 
@@ -34,7 +34,7 @@
         tools:layout="@layout/activity_category" />
     <activity
         android:id="@+id/detailActivity"
-        android:name="com.example.travelmate.presentation.feature.travel.view.activity.DetailActivity"
+        android:name="com.example.travelmate.presentation.feature.travel.view.traveldetail.DetailActivity"
         android:label="activity_detail"
         tools:layout="@layout/activity_detail" />
 </navigation>

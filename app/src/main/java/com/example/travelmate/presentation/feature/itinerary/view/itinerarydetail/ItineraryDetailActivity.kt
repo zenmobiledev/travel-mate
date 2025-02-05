@@ -18,7 +18,7 @@ import com.example.travelmate.R
 import com.example.travelmate.databinding.ActivityItineraryDetailBinding
 import com.example.travelmate.databinding.EditCustomDialogBinding
 import com.example.travelmate.domain.model.destination.Itinerary
-import com.example.travelmate.presentation.feature.travel.view.activity.DetailActivity
+import com.example.travelmate.presentation.feature.travel.view.traveldetail.DetailActivity
 import com.example.travelmate.utils.convertDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -92,9 +92,9 @@ class ItineraryDetailActivity : AppCompatActivity() {
         dialog.setCancelable(false)
 
         dialogBinding.edtDate.setText(itinerary.date)
-        dialogBinding.edtTitle.setSelection(itinerary.title.length)
         dialogBinding.edtTitle.setText(itinerary.title)
 
+        dialogBinding.edtTitle.setSelection(itinerary.title.length )
         dialogBinding.edtNotes.setText(itinerary.notes)
 
         // Date Picker
@@ -124,9 +124,7 @@ class ItineraryDetailActivity : AppCompatActivity() {
                 }
             }
             Toast.makeText(this, "Itinerary updated successfully", Toast.LENGTH_SHORT).show()
-            dialog.dismiss().also {
-                itineraryViewModel.getItinerary()
-            }
+            dialog.dismiss()
         }
 
         dialogBinding.btnNegative.setOnClickListener {

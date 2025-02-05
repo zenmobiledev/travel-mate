@@ -5,12 +5,12 @@ import com.example.travelmate.domain.repositories.TravelRepository
 import javax.inject.Inject
 
 class ItineraryUseCase @Inject constructor(private val travelRepository: TravelRepository) {
-    suspend fun saveItinerary(itinerary: Itinerary) {
-        travelRepository.saveItinerary(itinerary)
-    }
-
     suspend fun getItineraryList(): List<Itinerary> {
         return travelRepository.getListItinerary()
+    }
+    
+    suspend fun saveItinerary(itinerary: Itinerary) {
+        travelRepository.saveItinerary(itinerary)
     }
 
     suspend fun getItinerary(): Itinerary {

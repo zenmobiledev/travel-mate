@@ -1,4 +1,4 @@
-package com.example.travelmate.presentation.feature.travel.view.fragment
+package com.example.travelmate.presentation.feature.travel.view.travel
 
 import android.content.Intent
 import android.os.Bundle
@@ -21,9 +21,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.travelmate.R
 import com.example.travelmate.databinding.FragmentTravelBinding
-import com.example.travelmate.presentation.feature.travel.adapter.ItemDestinationAdapter
-import com.example.travelmate.presentation.feature.travel.view.activity.DetailActivity
-import com.example.travelmate.presentation.feature.travel.viewmodel.TravelViewModel
+import com.example.travelmate.presentation.feature.travel.view.adapter.ItemDestinationAdapter
+import com.example.travelmate.presentation.feature.travel.view.traveldetail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch

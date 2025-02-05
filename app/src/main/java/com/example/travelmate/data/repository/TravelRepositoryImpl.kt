@@ -94,9 +94,6 @@ class TravelRepositoryImpl @Inject constructor(
                     response.body()?.let {
                         val remoteDestination = mapper.mapResponseToEntities(it)
                         val domainDestination = mapper.mapResponseToDomain(it)
-//                        if (search != null) {
-//                            travelLocalDataStore.saveDataDestination(remoteDestination)
-//                        }
                         travelLocalDataStore.saveDataDestination(remoteDestination)
 
                         emit(ResultResponse.Success(domainDestination))
@@ -133,7 +130,6 @@ class TravelRepositoryImpl @Inject constructor(
     override suspend fun getItinerary(): Itinerary {
         return mapper.mapEntitiesToDomain(travelLocalDataStore.getItinerary())
     }
-
 
     override suspend fun updateItinerary(itinerary: Itinerary) {
         travelLocalDataStore.updateItinerary(mapper.mapDomainToEntities(itinerary))
