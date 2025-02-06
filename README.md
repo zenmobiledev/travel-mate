@@ -1,5 +1,5 @@
 
-## Tech Stack
+## Technology Used / Tech Stack
 
 [![JDK](https://img.shields.io/badge/openjdk-21.0.3-437291?style=for-the-badge&logo=openJdk&logoColor=white)](https://openjdk.org/)
 [![Android Studio](https://img.shields.io/badge/Android_Studio-2024.2.1_Patch_3-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white)](https://developer.android.com/studio)
@@ -23,9 +23,9 @@
 
 
 ## Table of Contents
-
+- [Technology Used / Tech Stack](#technology-used--tech-stack)
 - [Features](#features)
-- [Installation](#installation)
+- [Installation (How to run the project)](#installation-how-to-run-the-project)
 - [Tree / Folder Structure](#tree--folder-structure)
 - [Architecture](#architecture)
 - [Design Pattern](#design-pattern)
@@ -40,6 +40,7 @@
 >- **Pencarian Destinasi**: Pengguna dapat mencari destinasi wisata sesuai keinginan
 >- **Perencanaan Itinerary**: Pengguna dapat dengan mudah membuat dan mengelola itinerary perjalanan
 >- **Sistem Rekomendasi**: Pengguna dapat memilih preferensi sesuai dengan destinasi wisata yang diinginkan
+
 ## Installation (How to run the project)
 
 To run the project locally, follow these steps:
@@ -128,16 +129,19 @@ After the build process completes successfully:
 >- :exclamation: **COMING SOON**
 
 ## Todos
+>- [ ] Security and Testing
 
+## Done
+**Point Penilaian**:
+>- [x] Core Functionalities
+>- [x] Data Management and Recommendation System
+>- [x] User Interface and Experience
+
+**Fitur Aplikasi**:
 - [x]  Pencarian Destinasi
 - [x]  Perencanaan Itinerary
 - [x]  Sistem Rekomendasi
-## Done
 
-- [x] Core Functionalities
-- [x] Data Management and Recommendation System
-- [x] User Interface and Experience
-- [ ] Security and Testing
 ## Flowchart
 >- :exclamation: **COMING SOON**
 
