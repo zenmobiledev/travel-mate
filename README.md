@@ -127,10 +127,11 @@ After the build process completes successfully:
 |----------------------------------|
 |![Architecture](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/architecture.png)|
 ## Design Pattern
-**[Design Pattern](https://www.kodeco.com/18409174-common-design-patterns-and-app-architectures-for-android#toc-anchor-004)**
+**[Design Pattern](https://www.kodeco.com/18409174-common-design-patterns-and-app-architectures-for-android#toc-anchor-001)**
 >- Repository Pattern
 >- Use Case Pattern
->- Dependency Injection 
+>- Dependency Injection
+>- Adapter Pattern
 
 ## Todos
 >- [ ] Security and Testing
