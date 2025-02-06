@@ -123,10 +123,14 @@ After the build process completes successfully:
                             └── utils
 ```
 ## Architecture
->- :exclamation: **COMING SOON**
-
+|Architecture                      |
+|----------------------------------|
+|![Architecture](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/architecture.png)|
 ## Design Pattern
->- :exclamation: **COMING SOON**
+**[Design Pattern](https://www.kodeco.com/18409174-common-design-patterns-and-app-architectures-for-android#toc-anchor-004)**
+>- Repository Pattern
+>- Use Case Pattern
+>- Dependency Injection 
 
 ## Todos
 >- [ ] Security and Testing
@@ -143,7 +147,7 @@ After the build process completes successfully:
 >- [x]  Sistem Rekomendasi
 
 ## Flowchart
->- :exclamation: **COMING SOON**
+:exclamation: **COMING SOON**
 
 ## Preview
 |Splash Screen                     |Login                             |Type Destination                  |
