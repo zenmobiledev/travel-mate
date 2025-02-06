@@ -138,9 +138,9 @@ After the build process completes successfully:
 >- [x] User Interface and Experience
 
 **Fitur Aplikasi**:
-- [x]  Pencarian Destinasi
-- [x]  Perencanaan Itinerary
-- [x]  Sistem Rekomendasi
+>- [x]  Pencarian Destinasi
+>- [x]  Perencanaan Itinerary
+>- [x]  Sistem Rekomendasi
 
 ## Flowchart
 >- :exclamation: **COMING SOON**
