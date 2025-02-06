@@ -146,10 +146,25 @@ After the build process completes successfully:
 >- :exclamation: **COMING SOON**
 
 ## Preview
->- :exclamation: **COMING SOON**
+|Splash Screen                     |Login                             |Type Destination                  |
+|----------------------------------|----------------------------------|----------------------------------|
+|![Splash Screen](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/splash_screen.png)|![Login](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/login.png)|![Type Destination](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/destination_type.png)|
 
+|Travel Page                       |Travel Detail                     |Add Itinerary                     |
+|----------------------------------|----------------------------------|----------------------------------|
+|![Travel Page](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/travel_page.png)|![Travel Detail](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/travel_detail.png)|![Add Itinerary](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/add_itinerary.png)|
+
+|Itinerary Page                    |Itinerary Detail                  |Edit Itinerary                    |
+|----------------------------------|----------------------------------|----------------------------------|
+|![Itinerary Page](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/itinerary_page.png)|![Itinerary Detail](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/itinerary_detail_page.png)|![Edit Itinerary](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/edit_itinerary.png)|
+
+
+|Profile Page                      |Change Destination                |
+|----------------------------------|----------------------------------|
+|![Profile Page](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/profile_page.png)|![Change Destination](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/change_destination_page.png)|
 ## Demo
->- :exclamation: **COMING SOON**
+
+https://github.com/user-attachments/assets/eb5c3aa1-a7f6-450a-b130-707ab865296f
 
 ## Credit / Contributor(s)
 
