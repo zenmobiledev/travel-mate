@@ -151,7 +151,7 @@ After the build process completes successfully:
 :exclamation: **COMING SOON**
 
 ## Preview
-|Splash Screen                     |Login                             |Type Destination                  |
+|Splash Screen                     |Login                             |Destination Type                  |
 |----------------------------------|----------------------------------|----------------------------------|
 |![Splash Screen](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/splash_screen.png)|![Login](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/login.png)|![Type Destination](https://github.com/zenmobiledev/travel-mate/blob/master/app/src/main/java/com/example/assets/destination_type.png)|
 
